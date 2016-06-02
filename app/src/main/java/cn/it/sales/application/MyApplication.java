@@ -32,7 +32,7 @@ public class MyApplication extends Application {
     //登录状态为1时，登录成功
     public static int DENG_LU_ZHUANG_TAI=1;
     private  static MyApplication mApplication;
-    private static MyOpenHelp db1Help;
+    private static MyOpenHelp  mDB1Help;
     private static OkHttpClient mOkHttpClient;
     public static MyApplication getMyApplication(){
         return mApplication;
@@ -43,22 +43,24 @@ public class MyApplication extends Application {
         }
         return mOkHttpClient;
     }
-    private static List<AppCompatActivity> mList= new ArrayList<AppCompatActivity>();
+    private static List<AppCompatActivity> mActivityList= new ArrayList<AppCompatActivity>();
 
     public void addActivity(AppCompatActivity activity){
-        mList.add(activity);
+        mActivityList.add(activity);
     }
 
     public void removeActivity(AppCompatActivity activity){
-        mList.remove(activity);
+        mActivityList.remove(activity);
     }
 
 
 
     public void exitActivity(){
         try {
-            for (AppCompatActivity activity:mList) {
-                if (activity!=null){
+            for (int position =mActivityList.size()-1 ;position>=0;position--) {
+                AppCompatActivity activity=mActivityList.get(position);
+                if (activity != null ){
+                    removeActivity(activity);
                     activity.finish();
                 }
             }
@@ -107,8 +109,8 @@ public class MyApplication extends Application {
 
     public void initDBHlepByFirst(){
         copyDBFirstToDBFile();
-        db1Help = MyOpenHelp.getInstance(this);
-        db1Help.getReadableDatabase();
+        mDB1Help = MyOpenHelp.getInstance(this);
+        mDB1Help.getReadableDatabase();
     }
 
     private void copyDBFirstToDBFile() {
@@ -204,11 +206,15 @@ public class MyApplication extends Application {
     @Override
     public void onTerminate() {
         // TODO Auto-generated method stub
-        db1Help.close();
+        //关闭数据库
+        mDB1Help.close();
+        //关闭打开未能关闭的Activity
+        exitActivity();
+
         super.onTerminate();
     }
     public static MyOpenHelp getDb1Help(){
-        return db1Help;
+        return mDB1Help;
     }
     public void initjpushClear(){
         JPushInterface.setDebugMode(true);
