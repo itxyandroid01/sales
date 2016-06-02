@@ -9,7 +9,7 @@ import cn.it.sales.application.MyApplication;
  * Created by Administrator on 2016/6/1.
  */
 public class BaseActivity extends AppCompatActivity{
-
+    //这是一个注释 _mmmm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
