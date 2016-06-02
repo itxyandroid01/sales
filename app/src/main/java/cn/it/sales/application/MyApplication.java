@@ -27,8 +27,6 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class MyApplication extends Application {
 
-    public final static int JIZHANG1=1;
-    public final static int JIZHANG2=2;
     //登录状态为1时，登录成功
     public static int DENG_LU_ZHUANG_TAI=1;
     private  static MyApplication mApplication;
