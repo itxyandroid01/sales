@@ -26,6 +26,7 @@ import cn.it.sales.bean.User;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseActivity {
+    //添加一条注释
     String mUsername, mPassWord;
     ArrayList<String> mIsEmptylogin;
     Context mContext;
