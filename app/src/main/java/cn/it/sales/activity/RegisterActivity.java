@@ -31,6 +31,7 @@ import cn.it.sales.dal.UserManager;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
+    //klfldsa
     ArrayList<String> mIsEmpty;
     String mUserName,mPassword,mPassword2,mName,mPhone;
     Spinner mSpinner;
