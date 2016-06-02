@@ -44,11 +44,15 @@ public class MyApplication extends Application {
     private static List<AppCompatActivity> mActivityList= new ArrayList<AppCompatActivity>();
 
     public void addActivity(AppCompatActivity activity){
-        mActivityList.add(activity);
+        synchronized(mActivityList) {
+            mActivityList.add(activity);
+        }
     }
 
     public void removeActivity(AppCompatActivity activity){
-        mActivityList.remove(activity);
+        synchronized(mActivityList) {
+            mActivityList.remove(activity);
+        }
     }
 
 
@@ -67,10 +71,10 @@ public class MyApplication extends Application {
         }
     }
 
-    private static int mBanci;
+    private static int mBanCi;
 
-    public static int getmBanci() {
-        return mBanci;
+    public static int getmBanCi() {
+        return mBanCi;
     }
 
     //商品分类数据
