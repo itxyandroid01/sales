@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/et1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:editable="false"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:hint="请选择日期"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="____"/>
+
+        <EditText
+            android:id="@+id/et2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:editable="false"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:hint="请选择日期"/>
+        <Button
+            android:id="@+id/dateBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="选择日期"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+       <AutoCompleteTextView
+           android:id="@+id/autoCompleteTextView1"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:layout_weight="5"
+           android:textSize="12sp"
+           android:hint="请选择物品种类"/>
+        <Button
+            android:layout_height="wrap_content"
+            android:text="物品种类"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:textSize="12sp"
+            android:id="@+id/btnNormal">
+        </Button>
+        <Button
+            android:id="@+id/chaxunBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="查询"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+        <ExpandableListView android:id="@+id/ExpandableListView01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+        </ExpandableListView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/mShangPinMingCheng"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="商品名称"/>
+            <TextView
+                android:id="@+id/mXiaoShouShuLiang"
+                android:layout_width="0dp"
+                android:gravity="left"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="销售数量"/>
+
+            <TextView
+                android:id="@+id/mXiaoShouJinE"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="销售金额"/>
+
+            <TextView
+                android:id="@+id/mXiaoShouShiJian"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:text="销售时间"/>
+        </LinearLayout>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/mrecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="vertical">
+
+  </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+</LinearLayout>

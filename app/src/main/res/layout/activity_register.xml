@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@mipmap/dl01"
+              android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewRegist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="  用户注册"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/editTextRegistUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:drawableLeft="@mipmap/yh"
+        android:hint="  请输入用户名" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextRegistPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:drawableLeft="@mipmap/ym"
+        android:hint="  请输入密码" />
+
+    <EditText
+        android:id="@+id/editTextRegistPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:drawableLeft="@mipmap/qr"
+        android:hint="  请再次输入密码" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:drawableLeft="@mipmap/nc"
+        android:hint="  请输入用户昵称" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextPhoneNumer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:drawableLeft="@mipmap/sj"
+        android:hint="  请输入手机号" />
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonRegistSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/tj"/>
+
+        <Button
+            android:id="@+id/buttonRegistreturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:background="@mipmap/fh"/>
+
+    </LinearLayout>
+
+</LinearLayout>

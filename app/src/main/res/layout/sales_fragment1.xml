@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="cn.it.sales.fragment.SalesFragment1"
+              android:background="@color/seashell"
+    android:orientation="horizontal">
+
+    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:id="@+id/fragmeLayoutleibie"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"></FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerViewshangpin">
+    </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
