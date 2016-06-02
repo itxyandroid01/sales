@@ -28,7 +28,7 @@ import cn.jpush.android.api.JPushInterface;
 public class MyApplication extends Application {
 
     //登录状态为1时，登录成功
-    public static int DENG_LU_ZHUANG_TAI=1;
+
     private  static MyApplication mApplication;
     private static MyOpenHelp  mDB1Help;
     private static OkHttpClient mOkHttpClient;
