@@ -10,6 +10,7 @@ import cn.it.sales.application.MyApplication;
  */
 public class BaseActivity extends AppCompatActivity{
     //我修改了一行注释
+    //aaaaaaaaa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
