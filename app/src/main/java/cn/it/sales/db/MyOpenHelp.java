@@ -13,13 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/5/4.
- * 修改日期：2016/5/23添加方法
- *   （1）executeSQL
+/**       2016
+ *    （1）executeSQL
  *   (2)executeInsertSQLReturnRowId
  *   (3)executeSelectSQL
- *   （4）
+ + *   （4）
  */
 public class MyOpenHelp extends SQLiteOpenHelper {
     private static final String TAG = "MyOpenHelp";
