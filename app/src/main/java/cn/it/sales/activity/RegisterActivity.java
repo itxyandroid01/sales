@@ -27,7 +27,7 @@ import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.application.MyDebug;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
-import cn.it.sales.dal.UserManager;
+import cn.it.sales.bll.UserManager;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {

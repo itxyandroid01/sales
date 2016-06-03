@@ -16,7 +16,7 @@ import java.util.List;
 import cn.it.sales.R;
 import cn.it.sales.adapter.AccountRecycleAp;
 import cn.it.sales.application.MyApplication;
-import cn.it.sales.ball.ShangPinManager;
+import cn.it.sales.bll.ShangPinManager;
 import cn.it.sales.bean.ShangPin;
 import cn.it.sales.bean.ShangPinLeiXing1;
 

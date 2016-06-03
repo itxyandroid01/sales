@@ -12,7 +12,7 @@ import cn.it.sales.communal.Communals;
 import cn.it.sales.bean.JpushInfo;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
-import cn.it.sales.dal.UserManager;
+import cn.it.sales.bll.UserManager;
 import cn.it.sales.util.ServerUtil;
 import de.greenrobot.event.EventBus;
 
