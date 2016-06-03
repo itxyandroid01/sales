@@ -31,7 +31,7 @@ public class SalesFragment5 extends Fragment {
     Button mButton1,mButton2;
     RadioGroup mRadioGroup;
     int mBanBie=1;
-    int mBanci = MyApplication.getmBanci();
+    int mBanci = MyApplication.getmBanCi();
     SharedPreferences mSharedPreferences;
 
     public SalesFragment5() {
