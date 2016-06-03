@@ -105,7 +105,7 @@ public class JiaoBanDao {
             int jiaobanshuliang= (int) jsonObject1.get("jiaobankucunliang");
 
             String sql1 = String.format("insert into  t_jiaoban (" +
-                            "banci,gonghao,xingming,jiebangonghao" +
+                            "banci,gonghao,xingming,jiebangonghao," +
                             "jiebanshijian,jiaobaogonghao)" +
                             "values(%d ,%d, %s,%d,%d,%s,%d)",
                     banci,jiebangonghao, xingming, jiebangonghao,
@@ -133,14 +133,110 @@ public class JiaoBanDao {
             sqlList.add("delete from "+biao);
         }
         for (JieBanInfo item:list){
+            int mBanCi=item.getBanCi();
+            int mGongHao=item.getGongHao();
+            String mXingMing=item.getXingMing();
+            int mJieBanGongHao=item.getJieBanGongHao();
+            String mJieBanShiJian=item.getJieBanShiJian();
+            int mXiaoShouShuLiang=item.getXiaoShouShuLiang();
+            int mXiaoShouJinE=item.getXiaoShouJinE();
+            int mJiaoBanGongHao=item.getJiaoBanGongHao();
+            String mJiaoBanShiJian=item.getJiaoBanShiJian();
+            int mShangChuan=item.getShangChuan();
+            String mShangChuanShiJian=item.getShangChuanShiJian();
+            String mDianPu=item.getDianPu();
+            int mJiaoBanZhuangTai=item.getJiaoBanZhuangTai();
+            String mShangPinBianHao=item.getShangPinBianHao();
+            int mJieBanKuCunLiang=item.getJieBanKuCunLiang();
+            int mJiaoBanKuCunLiang=item.getJiaoBanKuCunLiang();
+            String mJieBanShiYi=item.getJieBanShiYi();
+            String mJiaoBanShiYi=item.getJiaoBanShiYi();
+            int mLeiBieBianHao=item.getLeiBieBianHao();
+            String mMingCheng=item.getMingCheng();
+            String mQuanCheng=item.getQuanCheng();
+            String mMiaoShu=item.getMiaoShu();
+            String mGuiGe=item.getGuiGe();
+            String mXingHao=item.getXingHao();
+            int mLingShouJia=item.getLingShouJia();
+            int mZheKeLv=item.getZheKeLv();
+            int mKuCunShuLiang=item.getKuCunShuLiang();
+            String mXiaoShouJianYi=item.getXiaoShouJianYi();
+            String mTuPianMingCheng=item.getTuPianMingCheng();
+            String mZhiChiHuoDong=item.getZhiChiHuoDong();
+            String mHuoJiaWeiZhi=item.getHuoJiaWeiZhi();
+            String mLeibiemingcheng=item.getLeibiemingcheng();
+            int mJiBie=item.getJiBie();
+            int mFuleibiebianhao=item.getFuleibiebianhao();
+            String mXiaoShouShiJian=item.getXiaoShouShiJian();
+            int mXiaoShouJiage=item.getXiaoShouJiage();
+            int mXiaoShouQianShuLiang=item.getXiaoShouQianShuLiang();
+            String mCanYuHuoDong=item.getCanYuHuoDong();
+            Log.d("wuyude",mCanYuHuoDong);
             String sql=String.format("insert into t_jiaoban "+
-                            "(banci,xingming,jiebangonghao,jiebanshijian，xiaoshoushuliang，xiaoshoujine，" +
+                            "(banci,gonghao,xingming,jiebangonghao,jiebanshijian，xiaoshoushuliang，xiaoshoujine，" +
                             "jiaobangonghao，jiaobanshijian，shangchuan，shangchuanshijian，" +
                             "dianpu，jiaobanzhuangtai) "+
-                            "values (%d,%d,'%s',%d,'%s',%d,%d,%d'%s',%d,)",
-                    item.getLeiBieBianHao(),item.getLeibiemingcheng(),
-                    item.getJiBie(),item.getFuleibiebianhao());
+                            "values (%d,%d,'%s',%d,'%s',%d,%d,%d'%s',%d,%d,%s,%d)",
+                    mBanCi,mGongHao,mXingMing,mJieBanGongHao,mJieBanShiJian,mXiaoShouShuLiang,mXiaoShouJinE,
+                    mJiaoBanGongHao,mJiaoBanShiJian,mShangChuan,mShangChuanShiJian,
+                    mDianPu,mJiaoBanZhuangTai);
+            String sql2=String.format("insert  into t_jiaoban_shangpin" +
+                    "(banci,gonghao,shangpinbianhao," +
+                    "jiebankucunliang,xiaoshoushuliang,xiaoshoujine," +
+                    "jiaobankucunliang)"+
+                    "values(%d,%d,'%s',%d,%d,%d,%d)",
+                    mBanCi,mGongHao,mShangPinBianHao,
+                    mJieBanKuCunLiang,mXiaoShouShuLiang,mXiaoShouJinE,
+                    mJiaoBanKuCunLiang
+                    );
+            String sql3=String.format("insert  into t_jiaoban_shiyi" +
+                    "(banci,gonghao,jiebanshiyi,jiaobanshiyi)"+
+                    "values(%d,%d,'%s','%s')",
+                    mBanCi,mGongHao,mJieBanShiYi,mJiaoBanShiYi
+                    );
+            String sql4=String.format("insert into t_jl_xiaoshou"+
+                    "(shangpinbianhao,gonghao,banci" +
+                    "xiaoshoushijian,xiaoshoushuliang,lingshoujia," +
+                    "xiaoshoujiage,zhekoulv,xiaoshouqianshuliang," +
+                    "canyuhuodong,shangchuan,shangchuanshijian," +
+                    "dianpu,jiaojiezhuangtai)"+
+                    "values('%s',%d,%d,'%s',%d,%d,%d,%d,%d,'%s',%d,'%s','%s',%d)",
+                    mShangPinBianHao,mGongHao,mBanCi,
+                    mXiaoShouShiJian,mXiaoShouShuLiang,mLingShouJia,
+                    mXiaoShouJiage,mZheKeLv,mXiaoShouQianShuLiang,
+                    mCanYuHuoDong,mShangChuan,mShangChuanShiJian,
+                    mDianPu,mJiaoBanZhuangTai
+            );
+//            String sql5=String.format("insert  into  t_shangchuanrenwu" +
+//                    "(bianhao,miaoshu,renwushijian,wanchengqingkuag)"+
+//                    "values(%d,%s,%s,%d)",
+//                    mMiaoShu,m
+//                    );
+            String sql5=String.format("insert into t_shangpin" +
+                    "(shangpinbianhao,leibiebianhao,mingcheng,quancheng,"+
+                    "miaoshu,guige,xinghao,lingshoujia,"+
+                    "zhekulv,kucunshuliang,xaioshoujianyi,"+
+                    "tupianmingcheng,zhichihuodong,huojiaweizhi)"+
+                    "values(%s,%d,%s,%s,%s,%s,%s,%d,%d,%d,%s,%s,%s,%s)",
+                    mShangPinBianHao,mLeiBieBianHao,mMingCheng,mQuanCheng,
+                    mMiaoShu,mGuiGe,mXingHao,mLingShouJia,
+                    mZheKeLv,mKuCunShuLiang,mXiaoShouJianYi,
+                    mTuPianMingCheng,mZhiChiHuoDong,mHuoJiaWeiZhi
+            );        ;
+            String sql6=String.format("insert into shangpingleibei" +
+            "(leibiebianhao,leibiemingcheng,jibie," +
+                    "fuleibianhao,tupianmingcheng)"+
+                    "values(%d,%s,%d,%d,%s)",
+                    mLeiBieBianHao,mLeibiemingcheng,mJiBie,
+                    mFuleibiebianhao,mTuPianMingCheng
+                    );
             sqlList.add(sql);
+            sqlList.add(sql2);
+            sqlList.add(sql3);
+            sqlList.add(sql4);
+            sqlList.add(sql5);
+            sqlList.add(sql6);
+            mDBHelpe.batchExecuteSQL(sqlList);
         }
 
     }
