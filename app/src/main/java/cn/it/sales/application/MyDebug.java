@@ -20,5 +20,6 @@ public class MyDebug {
     public static boolean DEMO_ParseAndSelectJiaoBanShiYi=false;
 
     public static boolean DEMO_TiJiaoZhuCe=true;
-
+   //测试结伴数据
+    public static boolean DEMO_ParseAndWritejiebaninfo =true;
 }
