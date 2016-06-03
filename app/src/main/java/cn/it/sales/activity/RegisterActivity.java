@@ -1,15 +1,11 @@
 package cn.it.sales.activity;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,23 +18,23 @@ import java.util.ArrayList;
 
 import cn.it.sales.R;
 import cn.it.sales.Result.MyResult;
-import cn.it.sales.Service.MyService;
 import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.application.MyDebug;
-import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
 import cn.it.sales.bll.UserManager;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
-    //klfldsa
     ArrayList<String> mIsEmpty;
     String mUserName,mPassword,mPassword2,mName,mPhone;
     Spinner mSpinner;
     String[] mJob={"选择职位","销售","主管","库管"};
+    Thread mLoginThread=null;
+    String mCallbackData,mAcceptCallbackData;
     int mPosition;
     String mSelectjob;
-    final String SHARED_NANE="username";
+
+    public final  String SHARED_NANE="username";
     //用户名
     EditText mEditTextUserName;
     //密码
@@ -54,6 +50,7 @@ public class RegisterActivity extends BaseActivity {
     Context mContext;
     SalesBinder mSalesBinder;
     ServiceConnection mServiceConnection1=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +116,7 @@ public class RegisterActivity extends BaseActivity {
                     editor.putString("niCheng", niCheng);
                     editor.putString("phone", phone);
                     editor.commit();
-                    Toast.makeText(RegisterActivity.this, "数据保存成功", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
                 }
             });
         }else {
@@ -203,117 +200,18 @@ public class RegisterActivity extends BaseActivity {
                         alertDialog.show();
                     }
                     //mIsEmpty无错误信息
-                    if (mIsEmpty.size() == 0 && mPassword.equals(mPassword2) && mPosition != 0) {
-                        //以bind方式启动一个服务
-                        Intent intent = new Intent(RegisterActivity.this, MyService.class);
-                        mServiceConnection1 = new ServiceConnection() {
-                            @Override
-                            public void onServiceConnected(ComponentName name, IBinder service) {
-                                //得到服务的Binder并保存到成员变量中
-                                mSalesBinder = (SalesBinder) service;
-                                //服务已连接 上传用户注册信息
-                                upLoadUserInfo();
-                            }
-
-                            @Override
-                            public void onServiceDisconnected(ComponentName name) {
-
-                            }
-                        };
-                        bindService(intent, mServiceConnection1, Context.BIND_AUTO_CREATE);
-                        //Intent intent1=new Intent(RegisterActivity.this,SalesmanActivity.class);
-                        //startActivity(intent1);
-                    }
+                   if (mIsEmpty.size() == 0 && mPassword.equals(mPassword2) && mPosition != 0) {
+                       initGetMessageCallback();
+                   }
 
                 }
             });
         }
         }
 
-    public void onEventMainThread(final ResultUser event){
-        int result=event.getResult();
-        if(result==1){
-            //3.7.2.2
-         //   MyResult m=loadSave();
-            AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
-            builder.setTitle("标题");
-            builder.setMessage("后台" + event.getMessage() );
-            DialogInterface.OnClickListener listener;
-            listener=new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            long groupid=event.getGroupid();
-                            Log.d("qq",""+groupid);
-//                            Intent intent=new Intent(RegisterActivity.this,SalesmanActivity.class);
-//                            startActivity(intent);
-                            skip(groupid);
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                    dialog.dismiss();
-                }
-            };
-            builder.setPositiveButton("确定", listener);
-            builder.setNegativeButton("取消", listener);
-            AlertDialog alertDialog=builder.create();
-            alertDialog.show();
+    private void initGetMessageCallback() {
+
         }
-        if(result==-1){
-            AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
-            builder.setTitle("温馨提醒");
-            builder.setMessage(event.getMessage());
-            DialogInterface.OnClickListener listener=new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            };
-            builder.setNegativeButton("取消",listener);
-            AlertDialog alertDialog=builder.create();
-            alertDialog.show();
-        }
-        if(result==-2){
-            android.app.AlertDialog.Builder builder = new
-                    android.app.AlertDialog.Builder(mContext);
-            builder.setTitle("温馨提醒");
-            builder.setMessage(event.getMessage());
-            DialogInterface.OnClickListener listener;
-            listener = new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            };
-            builder.setNegativeButton("取消", listener);
-            android.app.AlertDialog alertDialog = builder.create();
-
-            alertDialog.show();
-        }
-
-    }
-
-    private void skip(long groupid) {
-        if (groupid==1){
-            Intent intent=new Intent(RegisterActivity.this,SalesmanActivity.class);
-            startActivity(intent);
-            RegisterActivity.this.finish();
-        }else if(groupid==2){
-            Intent intent =new Intent(RegisterActivity.this,GovernorActivity.class);
-            startActivity(intent);
-            RegisterActivity.this.finish();
-        }else if(groupid==3){
-            Intent intent=new Intent(RegisterActivity.this,WarehouseActivity.class);
-            startActivity(intent);
-            RegisterActivity.this.finish();
-        }else {
-            Toast.makeText(this,"错误的ID"+groupid,Toast.LENGTH_LONG).show();
-        }
-    }
 
     private MyResult loadSave() {
         getEditTextInfo();
