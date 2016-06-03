@@ -13,12 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/5/4.
- * 修改日期：2016/5/23添加方法
- *   （1）executeSQL
+/**   20160603    修改
+ *  （1）executeSQL
  *   (2)executeInsertSQLReturnRowId
  *   (3)executeSelectSQL
+ *  （4）添加 public int[] batchExecuteSQLReturnRowId(List<String> list)
  */
 public class MyOpenHelp extends SQLiteOpenHelper {
     private static final String TAG = "MyOpenHelp";
@@ -211,6 +210,62 @@ public class MyOpenHelp extends SQLiteOpenHelper {
         }
         return row;
     }
+
+
+    /**
+     * 1
+     * 批量执行sql语句，每一行insert语句都返回insert时的ROWID,并放入返回值对应序号的位置
+     * insert语句返回的ROWID有效，非insert语句返回的ROWID无效，
+     * @param list
+     * @return
+     */
+    public int[] batchExecuteSQLReturnRowId(List<String> list){
+        int row=-1;
+        //
+        int[] ids=new int[list.size()];
+        for(int i=0;i<ids.length;i++){
+            ids[i]=-1;
+        }
+        synchronized (MyOpenHelp.class) {
+            //以写方式打开数据库
+            SQLiteDatabase database = this.getWritableDatabase();
+            //开启一个事务
+            database.beginTransaction();
+            try{
+                row=0;
+                //在try内批量执行SQL语句
+                for( int i=0;i< list.size();i++) {
+                    String sql=list.get(i);
+                    database.execSQL(sql);
+                    row++;
+                    Log.d(TAG, "batchExecuteSQL: " + sql);
+                    sql = "select last_insert_rowid() as _id ";
+                    List<Map<String,Object>> mapList = examine(sql);
+                    Log.d("mapList","mapList"+mapList.size());
+                    if(mapList != null && mapList.size()>0){
+                        ids[i]=(int)mapList.get(0).get("_id");
+                        Log.d("mapList","long"+ids[i]);
+                    }
+                }
+                //SQLite的事务默认为异常，所以批量操作完成时，设置事务位成功状态
+                database.setTransactionSuccessful();
+            }catch (SQLException e){
+                Log.d(TAG, "batchExecuteSQL: "+e.getMessage());
+                row=-1;
+            }
+            //无论有无异常，都结束事务
+            database.endTransaction();
+        }
+        if(row != list.size()){
+            ids=null;
+        }
+        return ids;
+    }
+
+
+
+
+
     public void qingKongShuJu(){
         SQLiteDatabase database = this.getWritableDatabase();
         database.beginTransaction();
