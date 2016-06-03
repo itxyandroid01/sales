@@ -27,7 +27,7 @@ public class JiaoBanShiYiDao {
         return "查找失败";
     }
 
-    public void writJiaoBanShiYiInfoToDB(List<JSONObject> dataList) {
+    public void writJiaoBanInfoToDB(List<JSONObject> dataList) {
 
     }
 }

@@ -65,18 +65,7 @@ public class FragmentJieban extends Fragment {
     }
 
     private void initButton() {
-
-//        mButton1=(Button)rootView.findViewById(R.id.kaishijieban);
         mButton2=(Button)rootView.findViewById(R.id.querenjieban);
-//        mButton1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mJiaoBanManager=new JiaoBanManager();
-//                int jieBanBanCi=mJiaoBanManager.selectJieBanBanCi();
-//                initshiyi(jieBanBanCi);
-//                initRecyclerView(jieBanBanCi);
-//            }
-//        });
         mButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

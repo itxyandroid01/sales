@@ -44,6 +44,36 @@
 
     </LinearLayout>
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textdianpu"
+            android:text="店铺："/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiodianpu"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio0４"
+                android:checked="true"
+                android:text="起疙瘩校园超市"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio0５"
+                android:text="牛顿国际"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
         android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"

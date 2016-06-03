@@ -128,7 +128,7 @@ public class JiaoBanShangPinDao {
     public List<JSONObject> readJiaoBanShangPinByJieBan(int banci) {
         List<JSONObject> objectList=new ArrayList<JSONObject>();
             String sql="select   xs.shangpinbianhao,sp.mingcheng,    " +
-                    "                  xs.jiebankucunliang,xs.jiaobankucunliang,xs.xiaoshoushuliang  , xs.banci  " +
+                    "           xs.jiebankucunliang,xs.jiaobankucunliang,xs.xiaoshoushuliang  , xs.banci  " +
                     "                     from t_jiaoban_shangpin xs , t_shangpin sp ,t_jiaoban jb" +
                     "                 where xs.shangpinbianhao = sp.shangpinbianhao ";
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);
@@ -150,7 +150,7 @@ public class JiaoBanShangPinDao {
         return objectList;
     }
     public int selectJieBanBanCi() {
-        String sql="select * from t_jiaoban_shangpin order by banci";
+        String sql="select * from t_jiaoban_shangpin";
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);
         int jiebanbanci= (int) mapList.get(mapList.size()-1).get("banci");
         Log.d("ceshi", "" + jiebanbanci);
