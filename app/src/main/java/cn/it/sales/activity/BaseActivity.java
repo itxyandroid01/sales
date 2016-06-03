@@ -9,8 +9,6 @@ import cn.it.sales.application.MyApplication;
  * Created by Administrator on 2016/6/1.
  */
 public class BaseActivity extends AppCompatActivity{
-    //我修改了一行注释
-    //aaaaaaaaa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
