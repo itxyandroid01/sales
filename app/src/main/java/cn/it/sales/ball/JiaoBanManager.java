@@ -2,6 +2,8 @@ package cn.it.sales.ball;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.bean.JiaoBanShangPin;
+import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.dao.JiaoBanDao;
 import cn.it.sales.dao.JiaoBanShangPinDao;
 import cn.it.sales.dao.JiaoBanShiYiDao;
@@ -74,5 +77,31 @@ public class JiaoBanManager {
 //        JiaoBanShiYiDao jiaoBanShiYiDao=new JiaoBanShiYiDao();
 //        jiaoBanShiYiDao.writJiaoBanShiYiInfoToDB(dataList);
 
+    }
+    private String makejiebanJSONString() {
+        //生成一个能存放很多店铺接班数据的List=》
+        String jsonString="";
+        //准备一个List
+        List<JieBanInfo> list=new ArrayList<JieBanInfo>();
+        JieBanInfo item;
+        //开始造N条数据，并且放入List
+        for(int i=0;i<=10;i++){
+            item= new JieBanInfo(20161001+i,1001+i,"张丹"+i,1000+i,"",20+i,5000+i,1001+i,"",1+i,"","牛顿国际"+i,2,"10001001"+i,
+                    300+i,200+i,"好好工作，没什么事宜","没有事宜",100200+i,"名称","全称","没有描述","规格","型号",
+                    100+i,8,200+i,"销售建议"+i,"图片名称"+i,"支持活动"+i,"货架位置"+i,"类别名称"+i,1,10001+i,"",88+i,66+i,"没有活动",1+i);
+            list.add(item);
+        }
+        for(int i=0;i<=10;i++){
+            item= new JieBanInfo(20161001+i,1001+i,"张丹"+i,1000+i,"",20+i,5000+i,1001+i,"",1+i,"","牛顿国际"+i,2,"10001001"+i,
+                    300+i,200+i,"好好工作，没什么事宜","没有事宜",100200+i,"名称","全称","没有描述","规格","型号",
+                    100+i,8,200+i,"销售建议"+i,"图片名称"+i,"支持活动"+i,"货架位置"+i,"类别名称"+i,2,10001+i,"",88+i,66+i,"没有活动",1+i);
+            list.add(item);
+        }
+
+        //把List转换为JSON字符串
+        Gson gson=new Gson();
+        jsonString= gson.toJson(list);
+        Log.d("ceshi", "jsonString: " + jsonString);
+        return jsonString;
     }
 }

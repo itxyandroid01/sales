@@ -12,6 +12,7 @@ import java.util.Map;
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.JiaoBan;
+import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.db.MyOpenHelp;
 
 /**
@@ -122,5 +123,25 @@ public class JiaoBanDao {
             e.printStackTrace();
         }
         mDBHelpe.batchExecuteSQL(list1);
+    }
+    public void writeJiebaninfoToDB(List<JieBanInfo> list) {
+        List <String> sqlList=new ArrayList<String>();
+        String[] biaoming={"t_jiaoban","t_jiaoban_shangpin", "t_jiaoban_shiyi",
+                "t_jl_xiaoshou","t_shangpin","t_shangpingleibie"
+        };
+        for (String biao:biaoming){
+            sqlList.add("delete from "+biao);
+        }
+        for (JieBanInfo item:list){
+            String sql=String.format("insert into t_jiaoban "+
+                            "(banci,xingming,jiebangonghao,jiebanshijian，xiaoshoushuliang，xiaoshoujine，" +
+                            "jiaobangonghao，jiaobanshijian，shangchuan，shangchuanshijian，" +
+                            "dianpu，jiaobanzhuangtai) "+
+                            "values (%d,%d,'%s',%d,'%s',%d,%d,%d'%s',%d,)",
+                    item.getLeiBieBianHao(),item.getLeibiemingcheng(),
+                    item.getJiBie(),item.getFuleibiebianhao());
+            sqlList.add(sql);
+        }
+
     }
 }
