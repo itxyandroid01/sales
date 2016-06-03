@@ -19,6 +19,7 @@ import java.util.Map;
  *   （1）executeSQL
  *   (2)executeInsertSQLReturnRowId
  *   (3)executeSelectSQL
+ *   （4）
  */
 public class MyOpenHelp extends SQLiteOpenHelper {
     private static final String TAG = "MyOpenHelp";
@@ -211,6 +212,9 @@ public class MyOpenHelp extends SQLiteOpenHelper {
         }
         return row;
     }
+
+
+
     public void qingKongShuJu(){
         SQLiteDatabase database = this.getWritableDatabase();
         database.beginTransaction();
