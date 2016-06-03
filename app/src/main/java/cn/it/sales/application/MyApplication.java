@@ -59,6 +59,7 @@ public class MyApplication extends Application {
 
     public void exitActivity(){
         try {
+            //从列表的后面向前依次处理，避免因为移动导致数组的序号错乱
             for (int position =mActivityList.size()-1 ;position>=0;position--) {
                 AppCompatActivity activity=mActivityList.get(position);
                 if (activity != null ){

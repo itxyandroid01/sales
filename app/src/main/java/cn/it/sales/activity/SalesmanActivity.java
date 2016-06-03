@@ -44,12 +44,14 @@ public class SalesmanActivity extends FragmentActivity {
 //            newAndAttchFragment(0);
 //        }
         mContext = this;
+        //ViewPager和GridView实现
         initViewPager();
         initGridView();
 
     }
 
     private void initViewPager() {
+        //ViewPager  数据  适配
         mViewPager = (ViewPager) findViewById(R.id.viewPager01);
         readData();
         mViewAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), mDataList);
