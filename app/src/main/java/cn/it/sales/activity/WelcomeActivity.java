@@ -99,7 +99,7 @@ public class WelcomeActivity extends BaseActivity {
 
             if (!TextUtils.isEmpty(mUsername) && TextUtils.isEmpty(mPassword)){
                 initShuJuHuiDiaoByBaidu();
-
+                //
             }
 
 
