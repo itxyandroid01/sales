@@ -1,4 +1,4 @@
-package cn.it.sales.ball;
+package cn.it.sales.bll;
 
 import java.util.ArrayList;
 import java.util.List;

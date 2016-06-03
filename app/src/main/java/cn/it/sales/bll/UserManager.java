@@ -1,4 +1,4 @@
-package cn.it.sales.dal;
+package cn.it.sales.bll;
 
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.bean.ResultUser;

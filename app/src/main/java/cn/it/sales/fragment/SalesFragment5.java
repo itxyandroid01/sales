@@ -16,7 +16,7 @@ import android.widget.Toast;
 import cn.it.sales.R;
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.application.MyApplication;
-import cn.it.sales.ball.JiaoBanManager;
+import cn.it.sales.bll.JiaoBanManager;
 import cn.it.sales.communal.Communals;
 import cn.it.sales.util.DateTimeUtil;
 
@@ -29,11 +29,11 @@ public class SalesFragment5 extends Fragment {
     TextView mTextView;
     Fragment mFragment;
     Button mButton1,mButton2;
-    RadioGroup mRadioGroup;
+    RadioGroup mRadioGroup1,mRadioGroup2;
     int mBanBie=1;
     int mBanci = MyApplication.getmBanCi();
     SharedPreferences mSharedPreferences;
-
+    String mDianPu;
     public SalesFragment5() {
         // Required empty public constructor
     }
@@ -53,11 +53,9 @@ public class SalesFragment5 extends Fragment {
     }
 
     private void initRadioGroup() {
-//        DateTimeUtil dateTimeUtil=new DateTimeUtil();
-//        mTextView=(TextView) rootView.findViewById(R.id.textshangpin);
-//        mTextView.setText(dateTimeUtil.getSystemtDateTime().toString());
-        mRadioGroup=(RadioGroup)rootView.findViewById(R.id.radiobanci);
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mRadioGroup2=(RadioGroup)rootView.findViewById(R.id.radiodianpu);
+        mRadioGroup1=(RadioGroup)rootView.findViewById(R.id.radiobanci);
+        mRadioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -71,6 +69,18 @@ public class SalesFragment5 extends Fragment {
                         mBanBie = 3;
                         break;
                 }
+            }
+        });
+        mRadioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                case R.id.radio0４:
+                mDianPu="起疙瘩校园超市";
+                break;
+                case R.id.radio0５:
+                mDianPu="牛顿国际";
+                break;}
             }
         });
     }

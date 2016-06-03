@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import cn.it.sales.R;
-import cn.it.sales.ball.SalesJiLuManager;
+import cn.it.sales.bll.SalesJiLuManager;
 import cn.it.sales.bean.JiLuXiaoShou;
 import cn.it.sales.bean.ShangPin;
 

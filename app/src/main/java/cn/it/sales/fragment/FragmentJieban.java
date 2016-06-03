@@ -24,7 +24,7 @@ import cn.it.sales.R;
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.adapter.JiaoJieRecyclerAdapter;
 import cn.it.sales.application.MyApplication;
-import cn.it.sales.ball.JiaoBanManager;
+import cn.it.sales.bll.JiaoBanManager;
 import cn.it.sales.communal.Communals;
 import cn.it.sales.util.DateTimeUtil;
 

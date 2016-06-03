@@ -15,7 +15,7 @@ import java.util.List;
 
 import cn.it.sales.R;
 import cn.it.sales.adapter.HotSales_Adapter_Activity;
-import cn.it.sales.ball.HotSalesManager;
+import cn.it.sales.bll.HotSalesManager;
 import cn.it.sales.bean.JiaoBanShangPin;
 import cn.it.sales.dao.ConnectDao;
 

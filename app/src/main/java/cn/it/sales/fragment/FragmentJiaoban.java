@@ -19,7 +19,7 @@ import java.util.List;
 
 import cn.it.sales.R;
 import cn.it.sales.adapter.JiaoJieRecyclerAdapter;
-import cn.it.sales.ball.JiaoBanManager;
+import cn.it.sales.bll.JiaoBanManager;
 import cn.it.sales.bean.JiaoBanShiYi;
 
 /**
