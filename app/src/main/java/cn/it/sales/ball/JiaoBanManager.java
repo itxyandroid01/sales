@@ -3,6 +3,7 @@ package cn.it.sales.ball;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.it.sales.Result.MyResult;
+import cn.it.sales.application.MyDebug;
 import cn.it.sales.bean.JiaoBanShangPin;
 import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.dao.JiaoBanDao;
@@ -78,6 +80,27 @@ public class JiaoBanManager {
 //        jiaoBanShiYiDao.writJiaoBanShiYiInfoToDB(dataList);
 
     }
+    public  void paserAndWriteShangPinLeiXin(String jsonString){
+        if(MyDebug.DEMO_ParseAndWritejiebaninfo){
+            //模拟一条从服务器下载的JSON字符串
+            jsonString=makejiebanJSONString();
+        }
+        //解析JSON字符串
+        Gson gson=new Gson();
+
+        // json字符串转为带泛型的list
+        List<JieBanInfo> list = gson.fromJson(jsonString,
+                new TypeToken<List<JieBanInfo>>() {
+                }.getType());
+        //测试一下显示的是否正确
+        for(JieBanInfo item : list){
+            Log.d("ceshijieban", "item: "+item.getLeibiemingcheng()+item.getLeiBieBianHao());
+        }
+        //把List数据写入数据库
+        JiaoBanDao dao = new JiaoBanDao();
+        dao.writeJiebaninfoToDB(list);
+    }
+
     private String makejiebanJSONString() {
         //生成一个能存放很多店铺接班数据的List=》
         String jsonString="";
