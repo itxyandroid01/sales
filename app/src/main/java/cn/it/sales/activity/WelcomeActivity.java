@@ -83,6 +83,8 @@ public class WelcomeActivity extends BaseActivity {
                 finish();
             }else {
                 initDengLuShouXuanXiang();
+                Intent intent=new Intent(WelcomeActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         }
 
