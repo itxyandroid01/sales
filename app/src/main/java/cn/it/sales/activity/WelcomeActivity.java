@@ -27,6 +27,7 @@ public class WelcomeActivity extends BaseActivity {
     Handler mHandler;
     String username;
     String  password;
+
     String mBaiDuFanHuiZhi,mFanHuiZhi;
     ServiceConnection mServiceConnection;
     SalesBinder mSalesBinder;
@@ -149,7 +150,7 @@ public class WelcomeActivity extends BaseActivity {
     public void onEventMainThread(LoginResult loginResult){
         mFanHuiZhi= loginResult.toString();
         if(!mFanHuiZhi.isEmpty()&&!mFanHuiZhi.startsWith("ERROR=")){
-            MyApplication.DENG_LU_ZHUANG_TAI=1;
+           // MyApplication.DENG_LU_ZHUANG_TAI=1;
             switch (mMainActivitym.mRadioGroupId){
                 case 1:
                     Intent intent = new Intent(WelcomeActivity.this, SalesmanActivity.class);
