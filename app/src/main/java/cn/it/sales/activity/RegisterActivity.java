@@ -22,7 +22,6 @@ import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.application.MyDebug;
 import cn.it.sales.bean.User;
 import cn.it.sales.bll.UserManager;
-import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
     ArrayList<String> mIsEmpty;
@@ -55,7 +54,6 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        EventBus.getDefault().register(RegisterActivity.this);
         mContext=this;
         //注册
         initButtonResister();

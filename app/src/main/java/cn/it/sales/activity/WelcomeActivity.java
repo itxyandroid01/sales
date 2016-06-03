@@ -142,7 +142,6 @@ public class WelcomeActivity extends BaseActivity {
                     break;
             }
 
-
         } else
 
         {
