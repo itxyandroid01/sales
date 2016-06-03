@@ -51,6 +51,7 @@ public class SalesmanActivity extends FragmentActivity {
     }
 
     private void initViewPager() {
+        //ViewPager  数据  适配
         mViewPager = (ViewPager) findViewById(R.id.viewPager01);
         readData();
         mViewAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), mDataList);
