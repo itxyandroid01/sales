@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.squareup.okhttp.Call;
@@ -81,7 +82,7 @@ public class WelcomeActivity extends BaseActivity {
         password = mSharedPreferences.getString("password", "");
 
 
-        if (!username.isEmpty() && !password.isEmpty()) {
+        if (!TextUtils.isEmpty(username)&& !password.isEmpty()) {
             initShuJuHuiDiaoByBaidu();
 
 

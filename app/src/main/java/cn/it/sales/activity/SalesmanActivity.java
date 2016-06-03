@@ -44,6 +44,7 @@ public class SalesmanActivity extends FragmentActivity {
 //            newAndAttchFragment(0);
 //        }
         mContext = this;
+        //ViewPager和GridView实现
         initViewPager();
         initGridView();
 
