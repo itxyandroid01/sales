@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**   20160603
+/**   20160603    修改
  *  （1）executeSQL
  *   (2)executeInsertSQLReturnRowId
  *   (3)executeSelectSQL
