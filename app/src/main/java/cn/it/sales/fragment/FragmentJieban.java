@@ -101,7 +101,7 @@ public class FragmentJieban extends Fragment {
         JSONObject jsonObject=new JSONObject();
         JSONObject jsonObject1=new JSONObject();
         jsonObject=mDataList.get(0);
-        int banci= MyApplication.getmBanci();
+        int banci= MyApplication.getmBanCi();
         Log.d("banci", "writInfoToDB: "+banci);
         try {
 
