@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.it.sales.R;
-import cn.it.sales.ball.ShangPinLeiXingManager;
-import cn.it.sales.ball.ShangPinManager;
+import cn.it.sales.bll.ShangPinLeiXingManager;
+import cn.it.sales.bll.ShangPinManager;
 import cn.it.sales.bean.ShangPinLeiXing1;
 import cn.it.sales.dao.JiaoBanShangPinDao;
 import cn.it.sales.db.MyOpenHelp;

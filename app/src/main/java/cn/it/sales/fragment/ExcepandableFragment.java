@@ -14,7 +14,7 @@ import java.util.List;
 import cn.it.sales.R;
 import cn.it.sales.adapter.AccountExpandableAp;
 import cn.it.sales.application.MyApplication;
-import cn.it.sales.ball.ShangPinLeiXingManager;
+import cn.it.sales.bll.ShangPinLeiXingManager;
 import cn.it.sales.bean.ShangPinLeiXing1;
 import cn.it.sales.bean.ShangPinLeiXing2;
 
