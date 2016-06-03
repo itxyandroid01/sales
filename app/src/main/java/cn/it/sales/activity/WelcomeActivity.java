@@ -27,8 +27,8 @@ import de.greenrobot.event.EventBus;
 public class WelcomeActivity extends BaseActivity {
     Handler mHandler;
     //用对象替换
-    String  username;
-    String  password;
+    String  mUsername;
+    String  mPassword;
 
 
     String mBaiDuFanHuiZhi,mFanHuiZhi;
@@ -89,13 +89,18 @@ public class WelcomeActivity extends BaseActivity {
 
     private void initDengLuShouXuanXiang() {
         mSharedPreferences = getSharedPreferences(mRegisterActivitym.SHARED_NANE, Context.MODE_PRIVATE);
-        username = mSharedPreferences.getString("username", "");
-        password = mSharedPreferences.getString("password", "");
+        mUsername = mSharedPreferences.getString("username", "");
+        mPassword = mSharedPreferences.getString("password", "");
 
         //使用TextUtils.isEmpty 替换password.isEmpty()
 
-        if (!TextUtils.isEmpty(username) && !password.isEmpty()) {
-            initShuJuHuiDiaoByBaidu();
+//        if (!TextUtils.isEmpty(username) && !password.isEmpty()) {
+//            initShuJuHuiDiaoByBaidu();
+
+            if (!TextUtils.isEmpty(mUsername) && TextUtils.isEmpty(mPassword)){
+                initShuJuHuiDiaoByBaidu();
+
+            }
 
 
 //        }else{
@@ -115,7 +120,7 @@ public class WelcomeActivity extends BaseActivity {
 //            bindService(intent,mServiceConnection,Context.BIND_AUTO_CREATE);
 //        }
         }
-    }
+
     private void initShuJuHuiDiaoByBaidu() {
         if(mLoginThread==null){
             mLoginThread=new Thread(){
