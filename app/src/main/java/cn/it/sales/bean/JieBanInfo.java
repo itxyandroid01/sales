@@ -19,8 +19,7 @@ public class JieBanInfo {
     private int mJiaoBanZhuangTai;//交班状态
     private String mShangPinBianHao;//商品编号
     private int mJieBanKuCunLiang;//接班库存量
-    //20161001,1001,"张丹",1000,"",20,5000,1001,"",1,"","牛顿国际",2,"10001001",300,200,"好好工作，没什么事宜","没有事宜",
-    // 100200,"名称","全称","没有描述","规格","型号"
+
     private int mJiaoBanKuCunLiang;//交班库存量
     private String mJieBanShiYi;//接班事宜
     private String mJiaoBanShiYi;//交班事宜
@@ -30,7 +29,7 @@ public class JieBanInfo {
     private String mMiaoShu;//描述
     private String mGuiGe;//规格
     private String mXingHao;//型号
-    //100,8,200,"销售建议","图片名称","支持活动","货架位置","类别名称",1,10001,"销售时间",88,66,"没有活动",1
+
     private int mLingShouJia;//零售价
     private int mZheKeLv;//折扣率
     private int mKuCunShuLiang;//库存数量
