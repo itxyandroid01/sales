@@ -3,6 +3,7 @@ package cn.it.sales.bean;
 /**
  * Created by Administrator on 2016/6/3.
  * 这是接班信息
+ * 这是接班信息1
  */
 public class JieBanInfo {
     private int mBanCi;//班次
