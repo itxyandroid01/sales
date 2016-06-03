@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.squareup.okhttp.Call;
@@ -25,8 +26,10 @@ import de.greenrobot.event.EventBus;
 
 public class WelcomeActivity extends BaseActivity {
     Handler mHandler;
-    String username;
+    //用对象替换
+    String  username;
     String  password;
+
 
     String mBaiDuFanHuiZhi,mFanHuiZhi;
     ServiceConnection mServiceConnection;
@@ -44,6 +47,7 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome);
 
         initEventBus();
+
         mHandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -54,6 +58,11 @@ public class WelcomeActivity extends BaseActivity {
         };
         mHandler.sendEmptyMessageDelayed(1, 2000);
 
+        //在 延时期间：
+        // 1.到服务器后台检测有无新的APK，有则下载并提示用户更新
+        // 2.到服务器后台检查有无更行的数据库数据，例如：商品，分类
+        // 3.注意：不建议通过子线程到服务器后台，而是通过binderService,
+        // 4.代码后续补充
     }
 
     private void initEventBus() {
@@ -63,25 +72,29 @@ public class WelcomeActivity extends BaseActivity {
 
     private void initLogin(){
 
+            //摘出去，通过业务逻辑模块+DAO 处理
             mSharedPreferences=getSharedPreferences(Communals.sharedPreferencesforlogIn, Context.MODE_APPEND);
             mFirstRun=mSharedPreferences.getBoolean("FIRST",true);
+
             if(mFirstRun){
                 mSharedPreferences.edit().putBoolean("FIRST", false).commit();
                 Intent intent=new Intent(WelcomeActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
+            }else {
+                initDengLuShouXuanXiang();
             }
-
-        initDengLuShouYuanXiang();
         }
 
 
-    private void initDengLuShouYuanXiang() {
+    private void initDengLuShouXuanXiang() {
         mSharedPreferences = getSharedPreferences(mRegisterActivitym.SHARED_NANE, Context.MODE_PRIVATE);
         username = mSharedPreferences.getString("username", "");
         password = mSharedPreferences.getString("password", "");
 
+        //使用TextUtils.isEmpty 替换password.isEmpty()
 
-        if (!username.isEmpty() && !password.isEmpty()) {
+        if (!TextUtils.isEmpty(username) && !password.isEmpty()) {
             initShuJuHuiDiaoByBaidu();
 
 
@@ -108,6 +121,7 @@ public class WelcomeActivity extends BaseActivity {
             mLoginThread=new Thread(){
                 @Override
                 public void run() {
+                    //
                     String urlStr="http://www.baidu.com";
                     //第2步 利用Builer模式，配置URL地址和参数，并创建Builder实例
                     Request request=
