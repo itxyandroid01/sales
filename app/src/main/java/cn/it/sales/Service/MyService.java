@@ -181,7 +181,6 @@ public class MyService extends Service{
                                 ResultUser resultUser=new ResultUser(result,groupid);
                                 EventBus.getDefault().post(resultUser);
 
-
                         }
                         if(result==-1){
                             String message="没有此用户";

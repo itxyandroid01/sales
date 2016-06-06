@@ -57,42 +57,6 @@ public class SalesJiLuXiaoShouDao {
 
     }
 
-//    public MyResult makeOneSaleWriteToDB(ShangPin shangPin, JiLuXiaoShou jiLuXiaoShou, String times) {
-//
-//        String sql = String.format(
-//                "insert into t_jl_xiaoshou (" +
-//                        "shangpinbianhao,   gonghao," +
-//                        "banci," +
-//                        "xiaoshoushijian,    xiaoshoushuliang," +
-//                        "lingshoujia,    xiaoshoujiage," +
-//                        "zhekoulv,    xiaoshouqianshuliang," +
-//                        "canyuhuodong)" +
-//                        " values ('%s',%d,  %d,'%s',%d,   %d,%d,'%s',%d,  '%s')",
-//                shangPin.getShangPinBianHao(), jiLuXiaoShou.getGongHao(),
-//
-//                jiLuXiaoShou.getBanCi(),
-//
-//                times, jiLuXiaoShou.getXiaoShouShuLiang(),
-//
-//                shangPin.getLingShouJia(), jiLuXiaoShou.getXiaoShouJiage(),
-//
-//                shangPin.getZheKeLv(),
-//
-//                shangPin.getKuCunShuLiang(),
-//
-//                shangPin.getZhiChiHuoDong()
-//        );
-//
-//        int id = mDBHelpe.executeInsertSQLReturnRowId(sql);
-//        MyResult myResult;
-//        if (id > 0) {
-//            jiLuXiaoShou.set_id(id);
-//            myResult = new MyResult(1, "销售成功");
-//        } else {
-//            myResult = new MyResult(-1, "销售异常");
-//        }
-//        return myResult;
-//    }
 
     public List<JiaoBanShangPin> readJiLuXiaoShouByXiaoShouShuLiang(String sql) {
         List<Map<String, Object>> mapList = mDBHelpe.examine(sql);
@@ -331,7 +295,22 @@ public class SalesJiLuXiaoShouDao {
 
         return null;
     }
-
+    public  List<JiaoBanShangPin> readXiaoShouInfo() {
+        String sql="select   xs.shangpinbianhao,sp.xiaoshoushuliang,    " +
+                "   sp.xiaoshoujiage    " +
+                "      from t_jiaoban_shangpin xs , t_jl_xiaoshou sp " +
+                "   where xs.shangpinbianhao = sp.shangpinbianhao" ;
+        List<Map<String, Object>> mapList = mDBHelpe.examine(sql);
+        List<JiaoBanShangPin> list=new ArrayList<JiaoBanShangPin>();
+         for (Map<String,Object> item:mapList){
+             JiaoBanShangPin jiaoBanShangPin=new JiaoBanShangPin();
+             jiaoBanShangPin.setShangPinBianHao((String) item.get("shangpinbianhao"));
+             jiaoBanShangPin.setXiaoShouShuLiang((Integer) item.get("xiaoshoushuliang"));
+             jiaoBanShangPin.setXiaoShouJinE((Integer) item.get("xiaoshoujiage"));
+             list.add(jiaoBanShangPin);
+         }
+        return list;
+    }
 }
 
 

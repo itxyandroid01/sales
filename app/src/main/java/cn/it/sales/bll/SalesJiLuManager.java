@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.bean.JiLuXiaoShou;
+import cn.it.sales.bean.JiaoBanShangPin;
 import cn.it.sales.bean.SalesMessage;
 import cn.it.sales.bean.ShangPin;
 import cn.it.sales.dao.SalesJiLuXiaoShouDao;
@@ -29,6 +30,11 @@ public List<SalesMessage> readJiLuXiaoShou1(String mKaiShiShiJian, String mJieSh
         SalesJiLuXiaoShouDao dao=new SalesJiLuXiaoShouDao();
         list=dao.readJiLuXS1(liebiebianhao, kaiShiShiJian, jieShuShiJian);
         return list;
+    }
+
+    public List<JiaoBanShangPin> readXiaoShouInfo() {
+        SalesJiLuXiaoShouDao dao=new SalesJiLuXiaoShouDao();
+       return dao.readXiaoShouInfo();
     }
 
 

@@ -20,6 +20,7 @@ import cn.it.sales.R;
 public class JiaoJieRecyclerAdapter extends RecyclerView.Adapter<JiaoJieRecyclerAdapter.MyViewHolder> {
     List<JSONObject> mDataList;
     Context mContext;
+    //定义一个变量判断是否是接班
     boolean mIsJieBan;
 
     public JiaoJieRecyclerAdapter(Context context, List<JSONObject> dataList, boolean isJieBan) {
@@ -38,6 +39,7 @@ public class JiaoJieRecyclerAdapter extends RecyclerView.Adapter<JiaoJieRecycler
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         JSONObject jsonObject = mDataList.get(position);
+        //如果是接班刷新接班数据显示
         if (mIsJieBan) {
             try {
                 holder.mTextView1.setText(jsonObject.get("banci").toString());
@@ -47,7 +49,7 @@ public class JiaoJieRecyclerAdapter extends RecyclerView.Adapter<JiaoJieRecycler
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+       //否则，刷新交班数据显示
         } else {
             try {
                 holder.mTextView1.setText(jsonObject.get("mingcheng").toString());

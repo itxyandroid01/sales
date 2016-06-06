@@ -13,6 +13,7 @@ import java.util.List;
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.application.MyDebug;
 import cn.it.sales.bean.JiaoBanShangPin;
+import cn.it.sales.bean.JiaoBanShiYi;
 import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.dao.JiaoBanDao;
 import cn.it.sales.dao.JiaoBanShangPinDao;
@@ -126,5 +127,12 @@ public class JiaoBanManager {
         jsonString= gson.toJson(list);
         Log.d("ceshi", "jsonString: " + jsonString);
         return jsonString;
+    }
+
+
+    //生成的交班信息记录到本地数据库
+    public MyResult updateJiaoBanInfoToDb(JiaoBanShiYi jiaoBanShiYi, List<JiaoBanShangPin> list) {
+        JiaoBanShiYiDao dao=new JiaoBanShiYiDao();
+        return dao.updateJiaoBanInfoToDb(list,jiaoBanShiYi);
     }
 }

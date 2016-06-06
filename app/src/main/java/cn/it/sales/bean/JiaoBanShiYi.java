@@ -47,4 +47,8 @@ public class JiaoBanShiYi {
         mJieBanShiYi = jieBanShiYi;
         mJiaoBanShiYi = jiaoBanShiYi;
     }
+
+    public JiaoBanShiYi(String jiaoBanShiYi) {
+        mJiaoBanShiYi = jiaoBanShiYi;
+    }
 }
