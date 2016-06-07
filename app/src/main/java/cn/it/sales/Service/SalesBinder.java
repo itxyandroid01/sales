@@ -14,9 +14,9 @@ public class SalesBinder extends Binder {
         mMyService=myService;
     }
 
-    public void upJson(User user){
+    public void userRegister(User user){
         //上传用户信息继续3.2
-            mMyService.upLoadJsonInfo(user);
+            mMyService.userRegister(user);
     }
     public void selectUserMessage(User user){
         mMyService.selectUserMassageforWeb(user);

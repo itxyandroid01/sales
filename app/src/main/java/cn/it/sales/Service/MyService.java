@@ -89,7 +89,7 @@ public class MyService extends Service{
             e.printStackTrace();
         }
     }
-    public void upLoadJsonInfo(User user){
+    public void userRegister(User user){
         final JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("username",user.getUserName());

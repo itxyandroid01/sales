@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.text.TextUtils;
 
 import cn.it.sales.R;
@@ -31,15 +30,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                initLogin();
-
-                super.handleMessage(msg);
-            }
-        };
-        mHandler.sendEmptyMessageDelayed(1, 2000);
+        initLogin();
     }
 
     private void initLogin() {
@@ -61,8 +52,8 @@ public class WelcomeActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
             //从服务器效验账户密码
             //暂时屏蔽
-          //  initBinder();
-            Intent intent = new Intent(WelcomeActivity.this, SalesmanActivity.class);
+           initBinder();
+            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
             startActivity(intent);
 
         } else {
@@ -97,7 +88,7 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-//        this.unbindService(mSC);
+       this.unbindService(mSC);
         super.onStop();
     }
 }
