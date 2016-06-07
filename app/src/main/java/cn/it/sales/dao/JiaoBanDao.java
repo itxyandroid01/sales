@@ -11,7 +11,6 @@ import java.util.Map;
 
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.application.MyApplication;
-import cn.it.sales.bean.JiaoBan;
 import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.db.MyOpenHelp;
 
@@ -21,38 +20,13 @@ import cn.it.sales.db.MyOpenHelp;
  */
 public class JiaoBanDao {
     MyOpenHelp mDBHelpe= MyApplication.getDb1Help();
-//    int mDuiBanBanCi=MyApplication.getmDuiBanBanCi();
-    public void writeJiaoBanShangPinToDB(List<JiaoBan> list) {
-        //先把List中每一条数据转换成一条SQL语句，然后批量插入到数据库
-        List<String> sqlList = new ArrayList<String>();
-        for (JiaoBan item : list) {
-            String sql = String.format(
-                    "insert into t_jiaoban (" +
-                            "banci,   gonghao," +
-                            "xingming," +
-                            "jiebangonghao,    jiebanshijian," +
-                            "xiaoshoushuliang,    xiaoshoujine," +
-                            "jiaobangonghao,    jiaobanshijian,"+
-                            "shangchuan,    shangchuanshijian)" +
-                            " values (%d,%d,    '%s',    %d,'%s',    %d,%d,  %d,'%s',   %d,'%s')",
-                    item.getBanCi(), item.getGongHao(),
-                    item.getXingMing(),
-                    item.getJieBanGongHao(), item.getJieBanShiJian(),
-                    item.getXiaoShouShuLiang(), item.getXiaoShouJinE(),
-                    item.getJiaoBanGongHao(),item.getJiaoBanShiJian(),
-                    item.getShangChuan(),item.getShangChuanShiJian());
-            sqlList.add(sql);
-        }
-        mDBHelpe.batchExecuteSQL(sqlList);
-    }
 
+    //查询 是否接班
     public MyResult readJiaoBanByBanci(int gonghao, int banci,String xingming){
 
         MyResult myResult=new MyResult();
         String sql="select * from t_jiaoban order by banci";
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);
-        //获取对班的班次
-        int jiebanbanci=(int) mapList.get(mapList.size()-1).get("banci");
         for (Map<String,Object>  item:mapList){
             int gonghao1 = (int) item.get("gonghao");
             int i = (int) item.get("banci");
@@ -65,24 +39,21 @@ public class JiaoBanDao {
                     if (banci == i) {
                         myResult.setCodeAndMessage(1, "本班次已交班");
                     } else {
-                        writeBanCiToDb(gonghao, banci, xingming);
+
                         myResult.setCodeAndMessage(0, "正常上班");
                     }
                 }
             }else if(jiaobanzhuangtai==1){
                 myResult.setCodeAndMessage(2, "对班还没有交班，请不要着急");
             }else {
-                writeBanCiToDb(gonghao,banci,xingming);
                 myResult.setCodeAndMessage(0,"你是第一次来上班，加油！");
             }
             if(item.isEmpty()){}
         }
-        Log.d("ceshi", "" + myResult.getMessage());
-//        int duibanbanci=(int) mapList.get(mapList.size()-1).get("banci");
-//        Log.d("ceshi", "duibanbanhao" + duibanbanci);
         return myResult;
     }
 
+    //插入接班表中的接班记录
     private void writeBanCiToDb(int gonghao, int banci, String xingming) {
         String sql="insert into t_jiaoban(banci,gonghao,jiaobanzhuangtai,xingming)" +
                 " values ("+banci+","+gonghao+",1,'"+xingming+"')";
@@ -90,10 +61,8 @@ public class JiaoBanDao {
 
     }
 
-    public void writJiaoBanInfoToDB(List<JSONObject> dataList) {
-    }
-
-    public void InsertDataToDB(JSONObject jsonObject1) {
+    //生成接班记录到本地数据库
+    public MyResult InsertDataToDB(JSONObject jsonObject1) {
         List<String> list1=new ArrayList<String>() ;
         try {
             int banci= (int) jsonObject1.get("banci");
@@ -104,6 +73,9 @@ public class JiaoBanDao {
             int xiaoshoushuliang= (int) jsonObject1.get("xiaoshoushuliang");
             String shangpinbianhao= (String) jsonObject1.get("shangpinbianhao");
             int jiaobanshuliang= (int) jsonObject1.get("jiaobankucunliang");
+
+            //插入接班表中的接班记录
+            writeBanCiToDb(gonghao,banci,xingming);
 
             String sql1 = String.format("insert into  t_jiaoban (" +
                             "banci,gonghao,xingming,jiebangonghao," +
@@ -123,8 +95,12 @@ public class JiaoBanDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mDBHelpe.batchExecuteSQL(list1);
+        int row=mDBHelpe.batchExecuteSQL(list1);
+        MyResult myResult=new MyResult();
+        myResult.setCode(row);
+        return myResult;
     }
+    //服务器下载的数据解析并放到本地数据库
     public void writeJiebaninfoToDB(List<JieBanInfo> list) {
         List <String> sqlList=new ArrayList<String>();
         String[] biaoming={"t_jiaoban","t_jiaoban_shangpin", "t_jiaoban_shiyi",

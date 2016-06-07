@@ -16,6 +16,7 @@ import cn.it.sales.db.MyOpenHelp;
 public class JiaoBanShiYiDao {
     MyOpenHelp mDBHelpe= MyApplication.getDb1Help();
 
+    //根据接班班次查询接班事宜
     public String selectJieBanShiYiInfo(int jiebanbanci) {
         String sql="select * from t_jiaoban_shiyi ";
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);

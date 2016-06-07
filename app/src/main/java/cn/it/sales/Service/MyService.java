@@ -8,11 +8,12 @@ import android.os.IBinder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.it.sales.communal.Communals;
 import cn.it.sales.bean.JpushInfo;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
+import cn.it.sales.bll.JiaoBanManager;
 import cn.it.sales.bll.UserManager;
+import cn.it.sales.communal.Communals;
 import cn.it.sales.util.ServerUtil;
 import de.greenrobot.event.EventBus;
 
@@ -240,5 +241,11 @@ public class MyService extends Service{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    //从服务器下载数据
+    public void downloadShangpinInfo(){
+        //模拟下载成功，放到本地数据库
+        JiaoBanManager jiaoBanManager=new JiaoBanManager();
+        jiaoBanManager.paserAndWriteShangPinLeiXin("");
     }
 }
