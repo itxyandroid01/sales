@@ -40,8 +40,20 @@ public class MyOpenHelp extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * 当客户端版本号与服务端版本号不一致时，从数据库下载数据并更新数据库
+     * @param db
+     * @param oldVersion    当前数据库版本
+     * @param newVersion    新的数据库版本
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        String sql = "select from ";
+
+        if(oldVersion < newVersion){
+
+        }
 
     }
     public List<Map<String,Object>> examine(String sql){
