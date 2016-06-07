@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import cn.it.sales.activity.LoginActivity;
-import cn.it.sales.activity.RegisterActivity;
 import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.User;
 import cn.it.sales.communal.Communals;
@@ -16,9 +15,10 @@ import cn.it.sales.db.MyOpenHelp;
  */
 public class LoginDao {
     SharedPreferences mSharedPreferences;
-    RegisterActivity mRegisterActivity=new RegisterActivity();
     MyOpenHelp mDBHelpe;
+     String SHARED_NANE = "username";
     User mUser=new User();
+
     Boolean mFirstRun=true;
     public LoginDao() {
         mDBHelpe = MyApplication.getDb1Help();
@@ -34,13 +34,25 @@ public class LoginDao {
         }
         return mFirstRun;
     }
+
     //登录信息
     public User loginMessage(Context context){
-        mSharedPreferences = context.getSharedPreferences(mRegisterActivity.SHARED_NANE, Context.MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences(SHARED_NANE, Context.MODE_PRIVATE);
         String userName=mSharedPreferences.getString("username", "");
         String password=mSharedPreferences.getString("password", "");
         mUser.setUserName(userName);
         mUser.setPassWord(password);
         return mUser;
+    }
+    //注册信息
+    public void writeRegisterMessage(Context context,User user){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_NANE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", user.getUserName());
+        editor.putString("password", user.getPassWord());
+        editor.putString("niCheng", user.getNick());
+        editor.putString("phone", user.getphone());
+        editor.putLong("groupId",user.getGroupId());
+        editor.commit();
     }
 }

@@ -3,7 +3,7 @@ package cn.it.sales.bean;
 /**
  * Created by Administrator on 2016/5/4.
  */
-public class ResultUser {
+public class ResultUser  {
     int result;
     String username ;
     String password ;

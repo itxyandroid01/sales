@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.it.sales.R;
+import cn.it.sales.bean.User;
 import cn.it.sales.bll.ShangPinLeiXingManager;
 import cn.it.sales.bll.ShangPinManager;
 import cn.it.sales.bean.ShangPinLeiXing1;
@@ -26,8 +27,10 @@ import cn.jpush.android.api.JPushInterface;
  * Created by Administrator on 2016/5/19.
  */
 public class MyApplication extends Application {
-
-    //登录状态为1时，登录成功
+    private static User mUser;
+    public static User getUser() {
+        return mUser;
+    }
 
     private  static MyApplication mApplication;
     private static MyOpenHelp  mDB1Help;

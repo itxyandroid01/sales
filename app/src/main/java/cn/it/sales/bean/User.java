@@ -7,13 +7,24 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/5/4.
  */
-public class User implements Serializable{
+public class User  implements Serializable{
     //在线状态
     public static  final int ONLINE_ON = 1;
     //离线状态
     public static  final int ONLINE_OFF = 2;
     //需要校验密码方可登录
     public static final int ONLINE_VERIFY=3;
+    private  int LOGIN_ZHUANGTAI;
+
+    public int getLOGIN_ZHUANGTAI() {
+        return LOGIN_ZHUANGTAI;
+    }
+
+    public void setLOGIN_ZHUANGTAI(int LOGIN_ZHUANGTAI) {
+        this.LOGIN_ZHUANGTAI = LOGIN_ZHUANGTAI;
+    }
+
+
     public String getAddRess() {
         return addRess;
     }
@@ -53,6 +64,15 @@ public class User implements Serializable{
     }
 
     private int resultcode;
+
+    public User(String userName, String passWord, String nick, String phone, long groupId) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.nick = nick;
+        this.phone = phone;
+        this.groupId = groupId;
+    }
+
     public User(){
 
     }
