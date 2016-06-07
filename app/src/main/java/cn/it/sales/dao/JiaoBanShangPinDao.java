@@ -18,7 +18,7 @@ import cn.it.sales.db.MyOpenHelp;
  */
 public class JiaoBanShangPinDao {
     MyOpenHelp mDBHelpe;
-
+//修改1
     public JiaoBanShangPinDao() {
         mDBHelpe = MyApplication.getDb1Help();
     }
