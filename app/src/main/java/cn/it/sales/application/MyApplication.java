@@ -264,11 +264,6 @@ public class MyApplication extends Application {
             JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
             jiaoBanShangPinDao.readJiaoBanShangPinInfo();
         }
-//        if (MyDebug.DEMO_ParseAndSelectJiaoBanShiYi){
-//            JiaoBanShiYiDao jiaoBanShiYiDao=new JiaoBanShiYiDao();
-//            jiaoBanShiYiDao.selectJieBanShiYiInfo();
-//        }
-
         if (MyDebug.Demo_classify){
             JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
            jiaoBanShangPinDao.readJiaoBanShangPinList();

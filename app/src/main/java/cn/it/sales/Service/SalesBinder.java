@@ -27,4 +27,9 @@ public class SalesBinder extends Binder {
     public void upJpushsend(JpushInfo jpushInfo){
         mMyService.upJpushsend(jpushInfo);
     }
+
+    //下载接班数据
+    public void downloadShangpinInfo(){
+        mMyService.downloadShangpinInfo();
+    }
 }

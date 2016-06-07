@@ -18,65 +18,36 @@ import cn.it.sales.db.MyOpenHelp;
  */
 public class JiaoBanShangPinDao {
     MyOpenHelp mDBHelpe;
-
+//修改1
     public JiaoBanShangPinDao() {
         mDBHelpe = MyApplication.getDb1Help();
     }
+//模拟数据写入交班商品
 
-    public void writeJiaoBanShangPinToDB(List<JiaoBanShangPin> list) {
-//        int row = 0;
-        //先把List中每一条数据转换成一条SQL语句，然后批量插入到数据库
-        List<String> sqlList = new ArrayList<String>();
-        for (JiaoBanShangPin item : list) {
-            String sql = String.format(
-                    "insert into t_jiaoban_shangpin (" +
-                            "banci,   gonghao," +
-                            "shangpinbianhao," +
-                            "jiebankucunliang,    xiaoshoushuliang," +
-                            "xiaoshoujine,    jiaobankucunliang," +
-                            " values (%d,%d,    '%s',    %d,%d,    %d,%d,  '%s')",
-                    item.getBanCi(), item.getGongHao(),
-                    item.getShangPinBianHao(),
-                    item.getJieBanKuCunLiang(), item.getXiaoShouShuLiang(),
-                    item.getXiaoShouJinE(), item.getJiaoBanKuCunLiang());
-            sqlList.add(sql);
-        }
-        mDBHelpe.batchExecuteSQL(sqlList);
-//            return row;
-
-    }
-
-    public List<JiaoBanShangPin> readJiLuXiaoShouByXiaoShouShuLiang(String sql) {
-        List<Map<String, Object>> mapList = mDBHelpe.examine(sql);
-
-        return mapListToXiaoShouList(mapList);
-    }
-
-    private List<JiaoBanShangPin> mapListToXiaoShouList(List<Map<String, Object>> mapList) {
-
-        List<JiaoBanShangPin> list = new ArrayList<>();
-        if (mapList == null) {
-            return list;
-        }
-
-        for (Map<String, Object> item : mapList) {
-            JiaoBanShangPin jiaoBanShangPin = new JiaoBanShangPin();
-//            jiaoBanShangPin.setName((String) item.get("mingcheng"));
-//            jiaoBanShangPin.setShangpinjiage((int) item.get("lingshoujia"));
-            jiaoBanShangPin.setXiaoShouShuLiang((int) item.get("xiaoshoushuliang"));
-//            jiaoBanShangPin.setGonghao((int) item.get("gonghao"));
-//            jiaoBanShangPin.setJiebankucunliang((int) item.get("jiebankucunliang"));
-//            jiaoBanShangPin.setBanci((int) item.get("banci"));
-//            jiaoBanShangPin.setXiaoshoujine((int) item.get("xiaoshoujine"));
-//            jiaoBanShangPin.setJiaobankucunliang((int) item.get("jiaobankucunliang"));
+//    public void writeJiaoBanShangPinToDB(List<JiaoBanShangPin> list) {
+////        int row = 0;
+//        //先把List中每一条数据转换成一条SQL语句，然后批量插入到数据库
+//        List<String> sqlList = new ArrayList<String>();
+//        for (JiaoBanShangPin item : list) {
+//            String sql = String.format(
+//                    "insert into t_jiaoban_shangpin (" +
+//                            "banci,   gonghao," +
+//                            "shangpinbianhao," +
+//                            "jiebankucunliang,    xiaoshoushuliang," +
+//                            "xiaoshoujine,    jiaobankucunliang," +
+//                            " values (%d,%d,    '%s',    %d,%d,    %d,%d,  '%s')",
+//                    item.getBanCi(), item.getGongHao(),
+//                    item.getShangPinBianHao(),
+//                    item.getJieBanKuCunLiang(), item.getXiaoShouShuLiang(),
+//                    item.getXiaoShouJinE(), item.getJiaoBanKuCunLiang());
+//            sqlList.add(sql);
+//        }
+//        mDBHelpe.batchExecuteSQL(sqlList);
+////            return row;
 //
-//            jiaoBanShangPin.setShangpinbianhao((String) item.get(item.get("shangpinbianhao")));
+//    }
 
-            list.add(jiaoBanShangPin);
-        }
-        return list;
-    }
-
+    //读交班商品信息
     public List<JSONObject> readJiaoBanShangPinInfo(){
         List<JSONObject> objectList=new ArrayList<JSONObject>();
         String sql="select   xs.shangpinbianhao,sp.mingcheng,    " +
@@ -99,12 +70,14 @@ public class JiaoBanShangPinDao {
         }
         return objectList;
     }
+    //测试读取交班商品数据
     public List<JiaoBanShangPin> readJiaoBanShangPinList() {
         String sql="select *  from t_jiaoban_shangpin order by banci";
         List<Map<String,Object>>  mapList=mDBHelpe.examine(sql);
         return mapListToShangPinList(mapList);
     }
 
+    //解析交班商品信息
     private List<JiaoBanShangPin> mapListToShangPinList(List<Map<String, Object>> mapList) {
         List<JiaoBanShangPin> list =new ArrayList<JiaoBanShangPin>();
         if(mapList ==null){
@@ -125,6 +98,7 @@ public class JiaoBanShangPinDao {
         return list;
     }
 
+    //根据接班班次读接班数据并显示在界面
     public List<JSONObject> readJiaoBanShangPinByJieBan(int banci) {
         List<JSONObject> objectList=new ArrayList<JSONObject>();
             String sql="select   xs.shangpinbianhao,sp.mingcheng,    " +
@@ -149,6 +123,7 @@ public class JiaoBanShangPinDao {
         }}
         return objectList;
     }
+    //查询对班班次
     public int selectJieBanBanCi() {
         String sql="select * from t_jiaoban_shangpin";
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);
@@ -157,6 +132,4 @@ public class JiaoBanShangPinDao {
         return jiebanbanci;
     }
 
-    public void writeJiaoBanShangPinInfoToDB(List<JSONObject> dataList) {
-    }
 }

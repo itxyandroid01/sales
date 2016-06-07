@@ -13,6 +13,7 @@ import java.util.List;
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.application.MyDebug;
 import cn.it.sales.bean.JiaoBanShangPin;
+import cn.it.sales.bean.JiaoBanShiYi;
 import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.dao.JiaoBanDao;
 import cn.it.sales.dao.JiaoBanShangPinDao;
@@ -23,6 +24,7 @@ import cn.it.sales.dao.JiaoBanShiYiDao;
  */
 public class JiaoBanManager {
 
+    //读交班商品信息
     public List<JSONObject> readJiaoBanShangPinInfo(){
         List<JSONObject> list=new ArrayList<JSONObject>();
         JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
@@ -30,56 +32,50 @@ public class JiaoBanManager {
         return list;
     }
 
-    private List<JiaoBanShangPin> newJiaoBanShangPinDemo() {
-        List<JiaoBanShangPin> list=new ArrayList<JiaoBanShangPin>();
-        for (int i=1;i<10;i++){
-            JiaoBanShangPin jiaoBanShangPin=new JiaoBanShangPin(1001,001,""+1001001+(1000+i),1000+i,800+i,200,200+i);
-            list.add(jiaoBanShangPin);
-        }
-        Log.d("qa",""+list);
-        JiaoBanShangPinDao jiaoBanShangPinDao =new JiaoBanShangPinDao();
-        jiaoBanShangPinDao.writeJiaoBanShangPinToDB(list);
-        return list;
-    }
+//模拟数据写入交班商品
+//    private List<JiaoBanShangPin> newJiaoBanShangPinDemo() {
+//        List<JiaoBanShangPin> list=new ArrayList<JiaoBanShangPin>();
+//        for (int i=1;i<10;i++){
+//            JiaoBanShangPin jiaoBanShangPin=new JiaoBanShangPin(1001,001,""+1001001+(1000+i),1000+i,800+i,200,200+i);
+//            list.add(jiaoBanShangPin);
+//        }
+//        Log.d("qa",""+list);
+//        JiaoBanShangPinDao jiaoBanShangPinDao =new JiaoBanShangPinDao();
+//        jiaoBanShangPinDao.writeJiaoBanShangPinToDB(list);
+//        return list;
+//    }
 
+    //根据接班班次查询接班事宜
     public String selectJieBanShiYiInfo(int jiebanbanci) {
         JiaoBanShiYiDao jiaoBanShiYiDao=new JiaoBanShiYiDao();
         String jieBanShiYi=jiaoBanShiYiDao.selectJieBanShiYiInfo(jiebanbanci);
         return jieBanShiYi;
     }
 
+    //根据班次查询时候接班
     public MyResult readJiaobanByBanCi(int gonghao, int banci,String xingming) {
         JiaoBanDao jiaoBanDao = new JiaoBanDao();
         return jiaoBanDao.readJiaoBanByBanci(banci, gonghao, xingming);
     }
-
+    //查询对班班次
     public int selectJieBanBanCi() {
         JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
         return jiaoBanShangPinDao.selectJieBanBanCi();
     }
 
+     //根据接班班次读接班数据并显示在界面
     public List<JSONObject> readJiaoBanShangPinByJieBan(int jiebanbanci) {
         JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
         return jiaoBanShangPinDao.readJiaoBanShangPinByJieBan(jiebanbanci);
 
     }
 
+    //接班记录写入到本地数据库
     public MyResult writInfoToDB(JSONObject dataList) {
-        MyResult myResult=new MyResult();
         JiaoBanDao jiaoBanDao = new JiaoBanDao();
-        jiaoBanDao.InsertDataToDB(dataList);
-
-        myResult.setCode(1);
-
-        return myResult;
-//        JiaoBanDao jiaoBanDao=new JiaoBanDao();
-//        jiaoBanDao.writJiaoBanInfoToDB(dataList);
-//        JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
-//        jiaoBanShangPinDao.writeJiaoBanShangPinInfoToDB(dataList);
-//        JiaoBanShiYiDao jiaoBanShiYiDao=new JiaoBanShiYiDao();
-//        jiaoBanShiYiDao.writJiaoBanShiYiInfoToDB(dataList);
-
+        return  jiaoBanDao.InsertDataToDB(dataList);
     }
+    //从服务器下载的数据放入到本地数据库
     public  void paserAndWriteShangPinLeiXin(String jsonString){
         if(MyDebug.DEMO_ParseAndWritejiebaninfo){
             //模拟一条从服务器下载的JSON字符串
@@ -101,6 +97,7 @@ public class JiaoBanManager {
         dao.writeJiebaninfoToDB(list);
     }
 
+    //模拟下载的数据
     private String makejiebanJSONString() {
         //生成一个能存放很多店铺接班数据的List=》
         String jsonString="";
@@ -126,5 +123,12 @@ public class JiaoBanManager {
         jsonString= gson.toJson(list);
         Log.d("ceshi", "jsonString: " + jsonString);
         return jsonString;
+    }
+
+
+    //生成的交班信息记录到本地数据库
+    public MyResult updateJiaoBanInfoToDb(JiaoBanShiYi jiaoBanShiYi, List<JiaoBanShangPin> list) {
+        JiaoBanShiYiDao dao=new JiaoBanShiYiDao();
+        return dao.updateJiaoBanInfoToDb(list,jiaoBanShiYi);
     }
 }
