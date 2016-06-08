@@ -25,12 +25,13 @@ public class WelcomeActivity extends BaseActivity {
     SalesBinder mBinder;
     ServiceConnection mSC = null;
     LoginDao mLoginDao = new LoginDao();
-    LoginActivity mMainActivity = new LoginActivity();
+    // LoginActivity mMainActivity = new LoginActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        //创建一个两秒的延时
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -40,6 +41,9 @@ public class WelcomeActivity extends BaseActivity {
             }
         };
         mHandler.sendEmptyMessageDelayed(1, 2000);
+        //从网络服务器中下载数据版本和最新的数据到本地
+        //.....
+        //
     }
 
     private void initLogin() {
@@ -48,10 +52,10 @@ public class WelcomeActivity extends BaseActivity {
         if (mLoginDao.firstRun(this)) {
             return;
         }
-        ValidationLoginStatus();
+        validationLoginStatus();
     }
 
-    private void ValidationLoginStatus() {
+    private void validationLoginStatus() {
         mUser = mLoginDao.loginMessage(this);
         String userName = mUser.getUserName();
         String password = mUser.getPassWord();
