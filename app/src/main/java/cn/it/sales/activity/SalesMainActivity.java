@@ -24,7 +24,7 @@ import cn.it.sales.fragment.SalesFragment4;
 import cn.it.sales.fragment.SalesFragment5;
 import cn.it.sales.fragment.SalesFragment6;
 
-public class SalesmanActivity extends FragmentActivity {
+public class SalesMainActivity extends FragmentActivity {
     GridView mGridView;
     ViewPager mViewPager;
     MyViewPagerAdapter mViewAdapter;
@@ -39,7 +39,7 @@ public class SalesmanActivity extends FragmentActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_salesman);
+        setContentView(R.layout.activity_salesmain);
 //        if(savedInstanceState==null){
 //            newAndAttchFragment(0);
 //        }

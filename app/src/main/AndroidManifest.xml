@@ -70,9 +70,8 @@
             android:enabled="true"
             android:exported="true">
         </service>
-        <activity android:name=".activity.Sell_Activity">
-        </activity>
-        <activity android:name=".activity.SalesmanActivity"></activity>
+
+        <activity android:name=".activity.SalesMainActivity"></activity>
         <activity android:name=".activity.WarehouseActivity">
         </activity>
         <activity android:name=".activity.GovernorActivity">

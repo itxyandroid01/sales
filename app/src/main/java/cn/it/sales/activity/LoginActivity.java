@@ -132,7 +132,7 @@ public class LoginActivity extends BaseActivity {
                     if (mUsername.equals(userName) && mPassWord.equals(password) && !mUsername.isEmpty() && !mPassWord.isEmpty()) {
                         switch (mRadioGroupId) {
                             case 1:
-                                Intent intent = new Intent(LoginActivity.this, SalesmanActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, SalesMainActivity.class);
                                 startActivity(intent);
                                 break;
                             case 2:

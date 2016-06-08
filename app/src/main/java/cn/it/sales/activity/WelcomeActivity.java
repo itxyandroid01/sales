@@ -62,7 +62,7 @@ public class WelcomeActivity extends BaseActivity {
             //从服务器效验账户密码
             //暂时屏蔽
           //  initBinder();
-            Intent intent = new Intent(WelcomeActivity.this, SalesmanActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this, SalesMainActivity.class);
             startActivity(intent);
 
         } else {
