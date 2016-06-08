@@ -15,29 +15,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.it.sales.R;
+import cn.it.sales.bean.ShangPinLeiXing1;
 import cn.it.sales.bean.User;
 import cn.it.sales.bll.ShangPinLeiXingManager;
 import cn.it.sales.bll.ShangPinManager;
-import cn.it.sales.bean.ShangPinLeiXing1;
 import cn.it.sales.dao.JiaoBanShangPinDao;
 import cn.it.sales.db.MyOpenHelp;
 import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2016/5/19.
+ * 2016/06/08 by yuch 添加方法的注释说明
  */
 public class MyApplication extends Application {
-    private static User mUser;
+    //定义并初始当前用户为一个无内容的用户，启动时完成用户信息的补充
+    private static User mUser=new User();
+    /**
+     * 获取当前用户的唯一实例，用户实例保存当前用户和用户的登录状态信息
+     * @return
+     */
     public static User getUser() {
         return mUser;
     }
 
-    private  static MyApplication mApplication;
-    private static MyOpenHelp  mDB1Help;
-    private static OkHttpClient mOkHttpClient;
+     private  static MyApplication mApplication;
+
+    /***
+     * 获取当前应用的实例（标准的单实例），然后通过应用实例获取其它公共数据，例如用户，商品分类，数据库等
+     * @return
+     */
     public static MyApplication getMyApplication(){
         return mApplication;
     }
+
+    private static OkHttpClient mOkHttpClient;
     public static OkHttpClient getOkHttpClient(){
         if(mOkHttpClient==null){
             mOkHttpClient = new OkHttpClient();
@@ -77,13 +88,19 @@ public class MyApplication extends Application {
 
     private static int mBanCi;
 
+    /***
+     * 获取当前班次信息
+     * @return
+     */
     public static int getmBanCi() {
         return mBanCi;
     }
 
     //商品分类数据
     private static  List<ShangPinLeiXing1> mShangPinLeiXing1List=new ArrayList<ShangPinLeiXing1>();
-    //获取商品分类
+    /**
+     *   获取商品分类列表
+     */
     public static List<ShangPinLeiXing1> getShangPinLeiXing1List() {
         return mShangPinLeiXing1List;
     }
@@ -111,8 +128,20 @@ public class MyApplication extends Application {
         super.onCreate();
     }
 
+    private static MyOpenHelp mDB1Help;
 
+    /***
+     * 获取当前应用的第一个数据库的库实例，系统可以扩容支持多个数据库实例
+     * @return
+     */
+    public static MyOpenHelp getDb1Help(){
+        return mDB1Help;
+    }
 
+    /***
+     *  系统启动时，通过备份方式安装数据库的实例
+     *  把res/raw/sales,复制到/data/data/package/database/sales下
+     */
     public void initDBHlepByFirst(){
         copyDBFirstToDBFile();
         mDB1Help = MyOpenHelp.getInstance(this);
@@ -219,9 +248,10 @@ public class MyApplication extends Application {
 
         super.onTerminate();
     }
-    public static MyOpenHelp getDb1Help(){
-        return mDB1Help;
-    }
+
+    /***
+     * 极光推送初始化
+     */
     public void initjpushClear(){
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this); //极光推送的初始化
