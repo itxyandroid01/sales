@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.text.TextUtils;
 
@@ -13,22 +12,20 @@ import cn.it.sales.R;
 import cn.it.sales.Service.MyService;
 import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.bean.User;
-import cn.it.sales.dao.LoginDao;
+import cn.it.sales.bll.UserManager;
 
 public class WelcomeActivity extends BaseActivity {
-    Handler mHandler;
-    String mCallbackData, mAcceptCallbackData;
 
     Boolean mIsConnection = false;
     User mUser = new User();
     SalesBinder mBinder;
     ServiceConnection mSC = null;
-    LoginDao mLoginDao = new LoginDao();
-    LoginActivity mMainActivity = new LoginActivity();
+    UserManager mUserManager=new UserManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_welcome);
         initLogin();
     }
@@ -36,14 +33,14 @@ public class WelcomeActivity extends BaseActivity {
     private void initLogin() {
 
 
-        if (mLoginDao.firstRun(this)) {
+        if (mUserManager.firstRun(this)) {
             return;
         }
         ValidationLoginStatus();
     }
 
     private void ValidationLoginStatus() {
-        mUser = mLoginDao.loginMessage(this);
+        mUser =mUserManager.loginMessage(this);
         String userName = mUser.getUserName();
         String password = mUser.getPassWord();
        // mBinder.selectUserNameAndPassword(mUser);
@@ -88,7 +85,9 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-       this.unbindService(mSC);
+        if(mSC!=null) {
+            this.unbindService(mSC);
+        }
         super.onStop();
     }
 }

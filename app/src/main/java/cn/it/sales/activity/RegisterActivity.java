@@ -24,7 +24,7 @@ import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
-import cn.it.sales.dao.LoginDao;
+import cn.it.sales.bll.UserManager;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
@@ -34,9 +34,8 @@ public class RegisterActivity extends BaseActivity {
     String[] mJob = {"选择职位", "销售", "主管", "库管"};
     User mUser= MyApplication.getUser();
     SalesBinder mBinder;
-    LoginDao mLoginDao=new LoginDao();
+    UserManager mUserManager=new UserManager();
     ServiceConnection mServiceConnection = null;
-    int mPosition;
     long mGroupId;
 
 
@@ -91,18 +90,22 @@ public class RegisterActivity extends BaseActivity {
 
     private void initSpinner() {
         mSpinner = (Spinner) findViewById(R.id.spinner1);
+
+
+      mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+          @Override
+          public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              mGroupId = position;
+          }
+
+          @Override
+          public void onNothingSelected(AdapterView<?> parent) {
+
+          }
+      });
+
         mAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, mJob);
         mSpinner.setAdapter(mAdapter);
-
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mGroupId = position+1;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     private void initButtonResister() {
@@ -126,13 +129,14 @@ public class RegisterActivity extends BaseActivity {
     private boolean checkInputZhuCe() {
         //读用户输入信息到成员变量
         getEditTextInfo();
+        mIsEmpty = new ArrayList<String>();
         //如果输入有空，则不能进入注册
         if (mUserName.isEmpty() || mPassword.isEmpty() || mPassword2.isEmpty() ||
-                mName.isEmpty() || mPhone.isEmpty()||!mPassword.equals(mPassword2)||mPosition == 0) {
+                mName.isEmpty() || mPhone.isEmpty()||!mPassword.equals(mPassword2)||mGroupId == 0) {
             if (mUserName.isEmpty()) {
                 mIsEmpty.add("用户名不能为空");
             }
-            if (mPassword.isEmpty()) {
+             if (mPassword.isEmpty()) {
                 mIsEmpty.add("密码不能为空");
             }
             if (mPassword2.isEmpty()) {
@@ -142,40 +146,38 @@ public class RegisterActivity extends BaseActivity {
                 mIsEmpty.add("姓名不能为空");
             }
             if (mPhone.isEmpty()) {
-
                 mIsEmpty.add("手机号不能为空");
             }
             if(!mPassword.equals(mPassword2)){
                 mIsEmpty.add("两次输入的密码不一致");
             }
-            if(mPosition == 0){
+           if(mGroupId==0) {
                 mIsEmpty.add("请选择职位");
-            }
-            //把这些错误信息加入到一个数组中
-            StringBuffer stringBuffer = new StringBuffer();
-            for (int i = 0; i < mIsEmpty.size(); i++) {
-                stringBuffer.append(mIsEmpty.get(i) + "\t");
-            }
-            //创建一个对话框来显示错误信息
-            String line2 = stringBuffer.toString();
-            //将数据添加到Dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle("温馨提醒");
-            builder.setMessage(line2);
-            //设置监听
-            DialogInterface.OnClickListener listener;
-            listener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+           }
+                //把这些错误信息加入到一个数组中
+                StringBuffer stringBuffer = new StringBuffer();
+                for (int i = 0; i < mIsEmpty.size(); i++) {
+                    stringBuffer.append(mIsEmpty.get(i) + "\t");
                 }
-            };
-            builder.setNegativeButton("取消", listener);
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+                //创建一个对话框来显示错误信息
+                String line2 = stringBuffer.toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("温馨提示");
+                builder.setMessage(line2);
+                DialogInterface.OnClickListener listener;
+                listener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                };
+                builder.setNegativeButton("取消", listener);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
         }
         //如果输入信息无误则返回true否则false
-        if (mIsEmpty.size() == 0 && mPassword.equals(mPassword2) && mPosition != 0) {
+        if (mIsEmpty.size() == 0 && mPassword.equals(mPassword2) && mGroupId != 0) {
             return true;
         }
         return false;
@@ -209,7 +211,6 @@ public class RegisterActivity extends BaseActivity {
 //    }
 
     private void getEditTextInfo() {
-        mIsEmpty = new ArrayList<String>();
         mUserName = mEditTextUserName.getText().toString();
         mPassword = mEditTextPassword.getText().toString();
         mPassword2 = mEditTextPassword2.getText().toString();
@@ -241,7 +242,7 @@ public class RegisterActivity extends BaseActivity {
         Toast.makeText(RegisterActivity.this, resultUser.getMessage(), Toast.LENGTH_SHORT).show();
         if (resultUser.getResult() == 1) {
             //存入首选项，根据groupid跳转界面
-            mLoginDao.writeRegisterMessage(this, mUser);
+            mUserManager.writeRegisterMessage(this,mUser);
             //登录状态
             mUser.setLOGIN_ZHUANGTAI(mUser.ONLINE_VERIFY);
             Intent intent = new Intent(RegisterActivity.this, SalesmanActivity.class);

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -102,6 +103,7 @@ public class MyService extends Service{
         }
         //把json对象转换成字符串
         String jsonText=jsonObject.toString();
+        Log.d("hou",""+jsonText);
         //异步回调
         ServerUtil.OnOKHttpListener listener=new ServerUtil.OnOKHttpListener() {
             //3.7
@@ -162,6 +164,7 @@ public class MyService extends Service{
             jsonObject.put("password",user.getPassWord());
             jsonObject.put("groupid",user.getGroupId());
             String jsonText=jsonObject.toString();
+            Log.d("houxiao",""+jsonText);
             ServerUtil.OnOKHttpListener listener;
             listener=new ServerUtil.OnOKHttpListener() {
                 @Override

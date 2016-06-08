@@ -27,7 +27,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by Administrator on 2016/5/19.
  */
 public class MyApplication extends Application {
-    private static User mUser;
+    private static User mUser=new User();
     public static User getUser() {
         return mUser;
     }
