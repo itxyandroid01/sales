@@ -1,9 +1,12 @@
 package cn.it.sales.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
@@ -15,7 +18,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cn.it.sales.R;
-import cn.it.sales.application.MyDebug;
+import cn.it.sales.Service.MyService;
+import cn.it.sales.Service.SalesBinder;
+import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
 import cn.it.sales.dao.LoginDao;
 
@@ -25,7 +30,10 @@ public class LoginActivity extends BaseActivity {
     Context mContext;
     EditText mEditTextUserName, mEditTextPassWord;
     User mUser=new User();
+    long mGroupId;
     LoginDao mLoginDao=new LoginDao();
+    SalesBinder mBinder;
+    ServiceConnection mServiceConnection = null;
     RadioGroup mRadioGroup;
     RadioButton mRadioButtonXiaoShou,mRadioButtonZhuGuan,mRadioButtonKuGuan;
     int mRadioGroupId=1;
@@ -48,9 +56,25 @@ public class LoginActivity extends BaseActivity {
         initImageView1();
         //跳转注册界面
         initImageView2();
-
+        //绑定一个服务
+        initBinder();
     }
 
+    private void initBinder() {
+        Intent intent = new Intent(LoginActivity.this, MyService.class);
+        mServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                mBinder = (SalesBinder) service;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
+        this.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
     private void initRadioGroup() {
         mRadioGroup = (RadioGroup) findViewById(R.id.RadioGroup1);
         mRadioButtonXiaoShou = (RadioButton) findViewById(R.id.XiaoShou);
@@ -88,66 +112,68 @@ public class LoginActivity extends BaseActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //检查登录输入规则
+                if(checkInputDengLu()){
+                    //提交数据到服务器
+                    tiJiaoDengLu();
+                }
 
-                if (MyDebug.DEMO_TiJiaoZhuCe) {
-                    getInputMessage();
-                    if (mUsername.isEmpty() || mPassWord.isEmpty()) {
-                        if (mUsername.isEmpty()) {
-                            mIsEmptylogin.add("用户名不能为空");
-                        }
-                        if (mPassWord.isEmpty()) {
-                            mIsEmptylogin.add("密码不能为空");
-                        }
-                        StringBuffer stringBuffer = new StringBuffer();
-                        for (int i = 0; i < mIsEmptylogin.size(); i++) {
-                            stringBuffer.append(mIsEmptylogin.get(i) + "\t");
-                        }
-                        String line2 = stringBuffer.toString();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        builder.setTitle("温馨提示");
-                        builder.setMessage(line2);
-                        DialogInterface.OnClickListener listener;
-                        listener = new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        };
-                        builder.setNegativeButton("取消", listener);
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+            }
 
-                    }
-
-                    mUser= mLoginDao.loginMessage(LoginActivity.this);
-                    String userName=mUser.getUserName();
-                    String password=mUser.getPassWord();
-                    if (!mUsername.equals(userName)) {
-                        Toast.makeText(LoginActivity.this, "无此用户", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (!mPassWord.equals(password) && mPassWord.isEmpty()) {
-                        Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
-                    }
-                    if (mUsername.equals(userName) && mPassWord.equals(password) && !mUsername.isEmpty() && !mPassWord.isEmpty()) {
-                        switch (mRadioGroupId) {
-                            case 1:
-                                Intent intent = new Intent(LoginActivity.this, SalesMainActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 2:
-                                Intent intent1 = new Intent(LoginActivity.this, GovernorActivity.class);
-                                startActivity(intent1);
-                                break;
-                            case 3:
-                                Intent intent2=new Intent(LoginActivity.this,WarehouseActivity.class);
-                                startActivity(intent2);
-                                break;
-                        }
-                    }
+            private void tiJiaoDengLu() {
+                mUser = new User(mUsername,mPassWord,mGroupId);
+                if(mBinder!=null) {
+                    mBinder.selectUserNameAndPassword(mUser);
+                }else{
+                    onRestart();
                 }
             }
         });
+    }
+    public void onEventMainThread(ResultUser resultUser) {
+        Toast.makeText(LoginActivity.this, resultUser.getMessage(), Toast.LENGTH_SHORT).show();
+        if (resultUser.getResult() == 1) {
+            //存入首选项，根据groupid跳转界面
+            mLoginDao.writeRegisterMessage(this, mUser);
+            mUser.setLOGIN_ZHUANGTAI(mUser.ONLINE_VERIFY);
+            Intent intent = new Intent(LoginActivity.this, SalesmanActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private boolean checkInputDengLu() {
+        getInputMessage();
+        if (mUsername.isEmpty() || mPassWord.isEmpty()) {
+            if (mUsername.isEmpty()) {
+                mIsEmptylogin.add("用户名不能为空");
+            }
+            if (mPassWord.isEmpty()) {
+                mIsEmptylogin.add("密码不能为空");
+            }
+            StringBuffer stringBuffer = new StringBuffer();
+            for (int i = 0; i < mIsEmptylogin.size(); i++) {
+                stringBuffer.append(mIsEmptylogin.get(i) + "\t");
+            }
+            String line2 = stringBuffer.toString();
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("温馨提示");
+            builder.setMessage(line2);
+            DialogInterface.OnClickListener listener;
+            listener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            };
+            builder.setNegativeButton("取消", listener);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+        //错误信息为0
+        if(mIsEmptylogin.size()==0){
+            return true;
+        }
+        return false;
     }
 
     private void getInputMessage() {
@@ -159,5 +185,13 @@ public class LoginActivity extends BaseActivity {
     private void initEditText() {
         mEditTextUserName = (EditText) findViewById(R.id.editText1);
         mEditTextPassWord = (EditText) findViewById(R.id.editText2);
+    }
+
+    @Override
+    protected void onStop() {
+        if (mServiceConnection!=null) {
+            this.unbindService(mServiceConnection);
+            super.onStop();
+        }
     }
 }

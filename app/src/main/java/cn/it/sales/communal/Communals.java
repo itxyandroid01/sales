@@ -7,9 +7,9 @@ public class Communals {
 
 
     public static String upweb = "http://172.16.11.126:8080/cms/RequestJsonServlet";
-    public  static String RegisterCode="0";
-    public static String SelectCode="6";
-    public  static  String loginCode="9";
-    public  static String jpush="8";
+    public  static String RegisterCode="register";
+    public static String SelectCode="select";
+    public  static  String loginCode="login";
+    public  static String jpush="";
     public static String sharedPreferencesforlogIn ="UserMassage";
 }
