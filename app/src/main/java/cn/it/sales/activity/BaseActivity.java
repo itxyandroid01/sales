@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import cn.it.sales.application.MyApplication;
 
 /**
- * Created by Administrator on 2016/6/3.
- * 本Activity是其他Activity的基类
+ * Created by Administrator on 2016/6/3. 测试
+ * 本Activity是其他Activity的基类，用于解决子类Activity，在打开后当应用退出时自动关闭
+ *
  */
 public class BaseActivity extends AppCompatActivity{
     @Override
