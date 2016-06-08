@@ -53,7 +53,7 @@ public class ResultUser  {
         this.message = message;
     }
 
-    public ResultUser(int result, String username, String password, long groupid, String message,String nick) {
+    public ResultUser(int result, String username, String password, long groupid, String message, int nick) {
         this.result = result;
         this.username = username;
         this.password = password;

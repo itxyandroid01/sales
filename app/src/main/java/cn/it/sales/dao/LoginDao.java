@@ -40,8 +40,10 @@ public class LoginDao {
         mSharedPreferences = context.getSharedPreferences(SHARED_NANE, Context.MODE_PRIVATE);
         String userName=mSharedPreferences.getString("username", "");
         String password=mSharedPreferences.getString("password", "");
+        long groupId=mSharedPreferences.getLong("groupId",-1);
         mUser.setUserName(userName);
         mUser.setPassWord(password);
+        mUser.setGroupId(groupId);
         return mUser;
     }
     //注册信息

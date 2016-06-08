@@ -18,6 +18,7 @@ public class SalesBinder extends Binder {
         //上传用户信息继续3.2
             mMyService.userRegister(user);
     }
+
     public void selectUserMessage(User user){
         mMyService.selectUserMassageforWeb(user);
     }

@@ -110,17 +110,16 @@ public class MyService extends Service{
                 //3.7.1
                 try {
                     JSONObject jsonObject1=new JSONObject(jsonString);
-                    int result=jsonObject1.getInt("result");
+                    int result=jsonObject1.getInt("code");
                     if(result==1){
                         //3.7.2.1
-                        int result1=jsonObject1.getInt("result");
                         String username=jsonObject1.getString("username");
                         String password=jsonObject1.getString("password");
 //                        Log.d("xxx",username);
-                        String nick=jsonObject1.getString("nick");
+                        int gonghao=jsonObject1.getInt("gonghao");
                         long groupid=jsonObject1.getLong("groupid");
                         String message="注册成功";
-                        ResultUser resultUser=new ResultUser(result1,username,password,groupid,message,nick);
+                        ResultUser resultUser=new ResultUser(result,username,password,groupid,message,gonghao);
                        //存入首选项
                         UserManager userManager = new UserManager();
                         userManager.resultToSharedPreference(resultUser);
@@ -161,6 +160,7 @@ public class MyService extends Service{
         try {
             jsonObject.put("username",user.getUserName());
             jsonObject.put("password",user.getPassWord());
+            jsonObject.put("groupid",user.getGroupId());
             String jsonText=jsonObject.toString();
             ServerUtil.OnOKHttpListener listener;
             listener=new ServerUtil.OnOKHttpListener() {
@@ -180,6 +180,7 @@ public class MyService extends Service{
 //                            UserManager userManager = new UserManager();
 //                            userManager.resultToSharedPreference(resultUser);
                                 ResultUser resultUser=new ResultUser(result,groupid);
+                                resultUser.setMessage("登录成功");
                                 EventBus.getDefault().post(resultUser);
 
                         }

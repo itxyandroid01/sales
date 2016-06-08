@@ -37,7 +37,7 @@ public class RegisterActivity extends BaseActivity {
     LoginDao mLoginDao=new LoginDao();
     ServiceConnection mServiceConnection = null;
     int mPosition;
-    long mSelectjob;
+    long mGroupId;
 
 
     //用户名
@@ -97,7 +97,7 @@ public class RegisterActivity extends BaseActivity {
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mSelectjob = position+1;
+                mGroupId = position+1;
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -183,7 +183,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void tiJiaoZhuCe() {
         //整合对象
-        mUser = new User(mUserName, mPassword, mName, mPhone, mSelectjob);
+        mUser = new User(mUserName, mPassword, mName, mPhone, mGroupId);
         //上传数据
         if(mBinder!=null) {
             mBinder.userRegister(mUser);
@@ -242,6 +242,7 @@ public class RegisterActivity extends BaseActivity {
         if (resultUser.getResult() == 1) {
             //存入首选项，根据groupid跳转界面
             mLoginDao.writeRegisterMessage(this, mUser);
+            //登录状态
             mUser.setLOGIN_ZHUANGTAI(mUser.ONLINE_VERIFY);
             Intent intent = new Intent(RegisterActivity.this, SalesmanActivity.class);
             startActivity(intent);
