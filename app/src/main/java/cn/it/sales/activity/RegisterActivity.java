@@ -193,6 +193,7 @@ public class RegisterActivity extends BaseActivity {
     }
 //    private void initGetMessageCallback() {
 //
+
 //    }
 
 //    private MyResult loadSave() {
