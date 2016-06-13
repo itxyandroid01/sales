@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity {
         if (resultUser.getResult() == 1) {
             //存入首选项，根据groupid跳转界面
             mLoginDao.writeRegisterMessage(this, mUser);
-            mUser.setLOGIN_ZHUANGTAI(mUser.ONLINE_VERIFY);
+            mUser.setZhuangTai(mUser.ONLINE_VERIFY);
             Intent intent = new Intent(LoginActivity.this, SalesMainActivity.class);
             startActivity(intent);
         }
