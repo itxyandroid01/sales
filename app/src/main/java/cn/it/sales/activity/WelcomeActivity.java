@@ -53,12 +53,12 @@ public class WelcomeActivity extends BaseActivity {
 
     private void ValidationLoginStatus() {
         mUser = mLoginDao.loginMessage(this);
-        String userName = mUser.getUserName();
+        String gongHao = mUser.getGongHao();
         String password = mUser.getPassWord();
        // mBinder.selectUserNameAndPassword(mUser);
 
         //用TextUtils.isEmpty替换
-        if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(gongHao) && !TextUtils.isEmpty(password)) {
             //从服务器效验账户密码
             //暂时屏蔽
           //  initBinder();
