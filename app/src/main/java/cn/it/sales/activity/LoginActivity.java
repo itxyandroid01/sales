@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity {
     LoginDao mLoginDao=new LoginDao();
     SalesBinder mBinder;
     String mPassWordMd5;
-    Intent mIntent = new Intent(LoginActivity.this, MyService.class);
+    Intent mIntent ;
     ServiceConnection mServiceConnection = null;
     RadioGroup mRadioGroup;
     RadioButton mRadioButtonXiaoShou,mRadioButtonZhuGuan,mRadioButtonKuGuan;
@@ -124,6 +124,7 @@ public class LoginActivity extends BaseActivity {
                 //检查登录输入规则
                 if(checkInputDengLu()){
                     //提交数据到服务器
+                    mIntent = new Intent(LoginActivity.this, MyService.class);
                     mContext.bindService(mIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
                     tiJiaoDengLu();
                 }
