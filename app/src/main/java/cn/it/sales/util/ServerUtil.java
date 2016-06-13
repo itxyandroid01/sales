@@ -47,7 +47,7 @@ public class ServerUtil {
         }
                 JSONObject jsona=new JSONObject(json);
         final JSONObject jsonObject=new JSONObject();
-                jsonObject.put("mode","login");
+                jsonObject.put("mode",selectCode);
                 jsonObject.put("user",jsona);
         String jsonString=jsonObject.toString();
         RequestBody formBody = new FormEncodingBuilder()

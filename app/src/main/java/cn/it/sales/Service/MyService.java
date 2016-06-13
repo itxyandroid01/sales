@@ -99,7 +99,7 @@ public class MyService extends Service{
         try {
             jsonObject.put("gonghao",user.getGongHao());
             jsonObject.put("mima",user.getPassWord());
-            jsonObject.put("xingming",user.getGongHao());
+            //jsonObject.put("xingming",user.getGongHao());
             jsonObject.put("shoujihaoma",user.getphone());
             jsonObject.put("xingbie","男");
             jsonObject.put("email",user.getEmail());
@@ -159,7 +159,7 @@ public class MyService extends Service{
             }
         };
         try {
-            ServerUtil.upJsonStringByPost(Communals.upbaidu,Communals.RegisterCode,jsonText,listener);
+            ServerUtil.upJsonStringByPost(Communals.upweb,Communals.RegisterCode,jsonText,listener);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -167,9 +167,9 @@ public class MyService extends Service{
     public void selectUserNameAndPasswordForWeb(User user){
         final JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("gonghao",10000);
-            jsonObject.put("password","111111");
-            jsonObject.put("groupid",1001);
+            jsonObject.put("gonghao",user.getGongHao());
+            jsonObject.put("password",user.getPassWord());
+            jsonObject.put("groupid",user.getGroupId());
             String jsonText=jsonObject.toString();
             Log.d("houxiao",""+jsonText);
             ServerUtil.OnOKHttpListener listener;
@@ -183,30 +183,32 @@ public class MyService extends Service{
 //                    }
                     try {
                         JSONObject jsonObject1=new JSONObject(jsonString);
-                        int result=jsonObject1.getInt("result");
-                        if(result==1){
-                            int groupid=jsonObject1.getInt("groupid");
-                           // String username=jsonObject1.getString("username");
+                        String code=jsonObject1.getString("code");
+                        String message=jsonObject1.getString("message");
+                        if(message.equals("成功")){
+                            //int groupid=jsonObject1.getInt("groupid");
+                           String username=jsonObject1.getString("username");
+                            int state=jsonObject1.getInt("state");
                           //  String password=jsonObject1.getString("mima");
 //                            Log.d("xw",""+groupid);
 //                            ResultUser resultUser=new ResultUser(username,password,groupid,message,nick);
 //                            //存入首选项
 //                            UserManager userManager = new UserManager();
 //                            userManager.resultToSharedPreference(resultUser);
-                                ResultUser resultUser=new ResultUser(result,groupid);
+                                ResultUser resultUser=new ResultUser(username,state);
                                 resultUser.setMessage("登录成功");
                                 EventBus.getDefault().post(resultUser);
                         }
-                        if(result==-1){
-                            String message="没有此用户";
-                            ResultUser resultUser=new ResultUser(result,message);
-                            EventBus.getDefault().post(resultUser);
-                        }
-                        if(result==-2){
-                            String message="密码错误";
-                            ResultUser resultUser=new ResultUser(result,message);
-                            EventBus.getDefault().post(resultUser);
-                        }
+//                        if(result==-1){
+//                            String message="没有此用户";
+//                            ResultUser resultUser=new ResultUser(result,message);
+//                            EventBus.getDefault().post(resultUser);
+//                        }
+//                        if(result==-2){
+//                            String message="密码错误";
+//                            ResultUser resultUser=new ResultUser(result,message);
+//                            EventBus.getDefault().post(resultUser);
+//                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();

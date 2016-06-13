@@ -23,6 +23,7 @@ import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
 import cn.it.sales.dao.LoginDao;
+import cn.it.sales.util.HexUtil;
 import de.greenrobot.event.EventBus;
 
 public class LoginActivity extends BaseActivity {
@@ -34,6 +35,8 @@ public class LoginActivity extends BaseActivity {
     long mGroupId;
     LoginDao mLoginDao=new LoginDao();
     SalesBinder mBinder;
+    String mPassWordMd5;
+    Intent mIntent = new Intent(LoginActivity.this, MyService.class);
     ServiceConnection mServiceConnection = null;
     RadioGroup mRadioGroup;
     RadioButton mRadioButtonXiaoShou,mRadioButtonZhuGuan,mRadioButtonKuGuan;
@@ -67,7 +70,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initBinder() {
-        Intent intent = new Intent(LoginActivity.this, MyService.class);
+
         mServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -79,7 +82,7 @@ public class LoginActivity extends BaseActivity {
 
             }
         };
-        this.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+
     }
     private void initRadioGroup() {
         mRadioGroup = (RadioGroup) findViewById(R.id.RadioGroup1);
@@ -121,13 +124,15 @@ public class LoginActivity extends BaseActivity {
                 //检查登录输入规则
                 if(checkInputDengLu()){
                     //提交数据到服务器
+                    mContext.bindService(mIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
                     tiJiaoDengLu();
                 }
 
             }
 
             private void tiJiaoDengLu() {
-                mUser = new User(mGongHao,mPassWord,mGroupId);
+                mPassWordMd5= HexUtil.getMd5(mPassWord);
+                mUser = new User(mGongHao,mPassWordMd5,mGroupId);
                 if(mBinder!=null) {
                     mBinder.selectUserNameAndPassword(mUser);
                 }

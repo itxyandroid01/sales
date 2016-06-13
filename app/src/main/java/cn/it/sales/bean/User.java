@@ -16,11 +16,11 @@ public class User  implements Serializable{
     public static final int ONLINE_VERIFY=3;
     private  int LOGIN_ZHUANGTAI;
 
-    public int getLOGIN_ZHUANGTAI() {
+    public int getZhuangTai() {
         return LOGIN_ZHUANGTAI;
     }
 
-    public void setLOGIN_ZHUANGTAI(int LOGIN_ZHUANGTAI) {
+    public void setZhuangTai(int LOGIN_ZHUANGTAI) {
         this.LOGIN_ZHUANGTAI = LOGIN_ZHUANGTAI;
     }
 
