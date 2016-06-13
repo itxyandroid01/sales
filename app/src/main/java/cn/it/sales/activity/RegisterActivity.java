@@ -25,6 +25,7 @@ import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
 import cn.it.sales.bll.UserManager;
+import cn.it.sales.util.HexUtil;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
@@ -49,6 +50,7 @@ public class RegisterActivity extends BaseActivity {
     EditText mEditTextName;
     //手机号
     EditText mEditTextPhone;
+    String mPassWordMd5;
 
     ArrayAdapter<String> mAdapter;
     Context mContext;
@@ -187,7 +189,8 @@ public class RegisterActivity extends BaseActivity {
 
     private void tiJiaoZhuCe() {
         //整合对象
-        mUser = new User(mGongHao, mPassword, mName, mPhone, mGroupId);
+        mPassWordMd5= HexUtil.getMd5(mPassword);
+        mUser = new User(mGongHao, mPassWordMd5, mName, mPhone, mGroupId);
         //上传数据
         if(mBinder!=null) {
             mBinder.userRegister(mUser);
@@ -247,7 +250,7 @@ public class RegisterActivity extends BaseActivity {
             //存入首选项，根据groupid跳转界面
             mUserManager.writeRegisterMessage(this,mUser);
             //登录状态
-            mUser.setLOGIN_ZHUANGTAI(mUser.ONLINE_VERIFY);
+            mUser.setZhuangTai(mUser.ONLINE_VERIFY);
             Intent intent = new Intent(RegisterActivity.this, SalesMainActivity.class);
             startActivity(intent);
         }

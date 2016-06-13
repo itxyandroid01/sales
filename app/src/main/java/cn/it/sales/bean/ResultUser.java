@@ -9,6 +9,7 @@ public class ResultUser  {
     String password ;
     long groupid;
     String message;
+    int state;
     public ResultUser(){
 
     }
@@ -68,5 +69,9 @@ public class ResultUser  {
     public ResultUser(int result,long groupid){
         this.result=result;
         this.groupid=groupid;
+    }
+    public ResultUser(String username,int state){
+        this.username=username;
+        this.state=state;
     }
 }
