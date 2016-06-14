@@ -5,8 +5,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +23,9 @@ import cn.it.sales.dao.JiaoBanShiYiDao;
 public class JiaoBanManager {
 
     //读交班商品信息
-    public List<JSONObject> readJiaoBanShangPinInfo(){
-        List<JSONObject> list=new ArrayList<JSONObject>();
+    public List<JiaoBanShangPin> readJiaoBanShangPinInfo(){
         JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
-            list=jiaoBanShangPinDao.readJiaoBanShangPinInfo();
+        List<JiaoBanShangPin>   list=jiaoBanShangPinDao.readJiaoBanShangPinInfo();
         return list;
     }
 
@@ -64,16 +61,16 @@ public class JiaoBanManager {
     }
 
      //根据接班班次读接班数据并显示在界面
-    public List<JSONObject> readJiaoBanShangPinByJieBan(int jiebanbanci) {
+    public List<JiaoBanShangPin> readJiaoBanShangPinByJieBan(int jiebanbanci) {
         JiaoBanShangPinDao jiaoBanShangPinDao=new JiaoBanShangPinDao();
         return jiaoBanShangPinDao.readJiaoBanShangPinByJieBan(jiebanbanci);
 
     }
 
     //接班记录写入到本地数据库
-    public MyResult writInfoToDB(JSONObject dataList) {
+    public MyResult writInfoToDB(JieBanInfo jieBanInfo) {
         JiaoBanDao jiaoBanDao = new JiaoBanDao();
-        return  jiaoBanDao.InsertDataToDB(dataList);
+        return  jiaoBanDao.InsertDataToDB(jieBanInfo);
     }
     //从服务器下载的数据放入到本地数据库
     public  void paserAndWriteShangPinLeiXin(String jsonString){

@@ -37,7 +37,7 @@ public class FragmentJiaoban extends Fragment {
     JiaoBanShiYi jiaoBanShiYi;
     JiaoJieRecyclerAdapter mJiaobanAdapter;
     RecyclerView mRecyclerView;
-    List<JSONObject> mDataList;
+    List<JiaoBanShangPin> mDataList;
     public FragmentJiaoban() {
         // Required empty public constructor
     }

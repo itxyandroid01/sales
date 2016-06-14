@@ -11,6 +11,22 @@ public class JiaoBanShangPin {
     private int mXiaoShouShuLiang;//销售数量
     private int mXiaoShouJinE;//销售金额
     private int mJiaoBanKuCunLiang;//交班库存量
+    private  String mMingcCheng;
+
+    public String getMingcCheng() {
+        return mMingcCheng;
+    }
+
+    public JiaoBanShangPin(int jieBanKuCunLiang, int xiaoShouShuLiang, int jiaoBanKuCunLiang, String mingcCheng) {
+        mJieBanKuCunLiang = jieBanKuCunLiang;
+        mXiaoShouShuLiang = xiaoShouShuLiang;
+        mJiaoBanKuCunLiang = jiaoBanKuCunLiang;
+        mMingcCheng = mingcCheng;
+    }
+
+    public void setMingcCheng(String mingcCheng) {
+        mMingcCheng = mingcCheng;
+    }
 
     public JiaoBanShangPin() {
     }
