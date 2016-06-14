@@ -41,7 +41,7 @@ public class ServerUtil {
 //            String json= "{ 'name': 'cxh', 'gender': 'man' }";
         //RequestBody：请求的数据实体（Body,Headers）
         //根据指定的数据类型JSON把json字符串转换为body
-        Log.d("xq", url+selectCode+json);
+//        Log.d("xq", url+selectCode+json);
         if (TextUtils.isEmpty(json) || listener == null) {
             throw new Exception("参数不能为空");
         }

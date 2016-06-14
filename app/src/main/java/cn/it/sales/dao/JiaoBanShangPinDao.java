@@ -2,9 +2,6 @@ package cn.it.sales.dao;
 
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,27 +45,22 @@ public class JiaoBanShangPinDao {
 //    }
 
     //读交班商品信息
-    public List<JSONObject> readJiaoBanShangPinInfo(){
-        List<JSONObject> objectList=new ArrayList<JSONObject>();
+    public List<JiaoBanShangPin> readJiaoBanShangPinInfo(){
+        List<JiaoBanShangPin> list=new ArrayList<JiaoBanShangPin>();
         String sql="select   xs.shangpinbianhao,sp.mingcheng,    " +
                 "   xs.jiebankucunliang,xs.jiaobankucunliang,xs.xiaoshoushuliang    " +
                 "      from t_jiaoban_shangpin xs , t_shangpin sp " +
                 "   where xs.shangpinbianhao = sp.shangpinbianhao" ;
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);
         for(Map<String,Object> item : mapList){
-
-            JSONObject jsonObject=new JSONObject();
-            try {
-                jsonObject.put("mingcheng",item.get("mingcheng"));
-                jsonObject.put("xiaoshoushuliang",item.get("xiaoshoushuliang"));
-                jsonObject.put("jiaobankucunliang",item.get("jiaobankucunliang"));
-                jsonObject.put("jiebankucunliang",item.get("jiebankucunliang"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            objectList.add(jsonObject);
+            JiaoBanShangPin jiaoBanShangPin=new JiaoBanShangPin();
+            jiaoBanShangPin.setMingcCheng((String) item.get("mingcheng"));
+            jiaoBanShangPin.setXiaoShouShuLiang((Integer) item.get("xiaoshoushuliang"));
+            jiaoBanShangPin.setJiaoBanKuCunLiang((Integer) item.get("jiaobankucunliang"));
+            jiaoBanShangPin.setJieBanKuCunLiang((Integer) item.get("jiebankucunliang"));
+            list.add(jiaoBanShangPin);
         }
-        return objectList;
+        return list;
     }
     //测试读取交班商品数据
     public List<JiaoBanShangPin> readJiaoBanShangPinList() {
@@ -99,29 +91,26 @@ public class JiaoBanShangPinDao {
     }
 
     //根据接班班次读接班数据并显示在界面
-    public List<JSONObject> readJiaoBanShangPinByJieBan(int banci) {
-        List<JSONObject> objectList=new ArrayList<JSONObject>();
-            String sql="select   xs.shangpinbianhao,sp.mingcheng,    " +
-                    "           xs.jiebankucunliang,xs.jiaobankucunliang,xs.xiaoshoushuliang  , xs.banci  " +
-                    "                     from t_jiaoban_shangpin xs , t_shangpin sp ,t_jiaoban jb" +
-                    "                 where xs.shangpinbianhao = sp.shangpinbianhao ";
+    public List<JiaoBanShangPin> readJiaoBanShangPinByJieBan(int banci) {
+
+        List<JiaoBanShangPin> list=new ArrayList<JiaoBanShangPin>();
+            String sql="select   xs.shangpinbianhao,sp.mingcheng, " +
+                    " xs.jiebankucunliang,xs.jiaobankucunliang,xs.xiaoshoushuliang  , xs.banci  " +
+                    " from t_jiaoban_shangpin xs , t_shangpin sp " +
+                    "  where xs.shangpinbianhao = sp.shangpinbianhao  and  xs.banci = "+banci;
         List<Map<String,Object>> mapList=mDBHelpe.examine(sql);
         for(Map<String,Object> item : mapList){
-            int banci1= (int) item.get("banci");
-            if (banci==banci1){
-            JSONObject jsonObject=new JSONObject();
-            try {
-                jsonObject.put("mingcheng",item.get("mingcheng"));
-                jsonObject.put("xiaoshoushuliang",item.get("xiaoshoushuliang"));
-                jsonObject.put("jiaobankucunliang",item.get("jiaobankucunliang"));
-                jsonObject.put("jiebankucunliang",item.get("jiebankucunliang"));
-                jsonObject.put("banci",banci);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            objectList.add(jsonObject);
-        }}
-        return objectList;
+                int banci1= (int) item.get("banci");
+                JiaoBanShangPin jiaoBanShangPin=new JiaoBanShangPin();
+                jiaoBanShangPin.setBanCi(banci1);
+                jiaoBanShangPin.setMingcCheng((String) item.get("mingcheng"));
+                jiaoBanShangPin.setXiaoShouShuLiang((Integer) item.get("xiaoshoushuliang"));
+                jiaoBanShangPin.setJiaoBanKuCunLiang((Integer) item.get("jiaobankucunliang"));
+                jiaoBanShangPin.setJieBanKuCunLiang((Integer) item.get("jiebankucunliang"));
+                jiaoBanShangPin.setShangPinBianHao((String) item.get("shangpinbianhao"));
+            list.add(jiaoBanShangPin);
+        }
+        return list;
     }
     //查询对班班次
     public int selectJieBanBanCi() {

@@ -96,6 +96,10 @@ public class JieBanInfo {
         this._id = _id;
     }
 
+    public JieBanInfo() {
+
+    }
+
     public int getBanCi() {
         return mBanCi;
     }

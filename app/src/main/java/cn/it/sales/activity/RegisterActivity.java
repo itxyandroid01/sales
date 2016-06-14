@@ -117,11 +117,13 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                    //判断输入是否符合规则
-                    if (checkInputZhuCe()) {
-                        //如果符合则上传数据
-                        tiJiaoZhuCe();
-                    }
+                Intent intent = new Intent(RegisterActivity.this, SalesMainActivity.class);
+                startActivity(intent);
+//                    //判断输入是否符合规则
+//                    if (checkInputZhuCe()) {
+//                        //如果符合则上传数据
+//                        tiJiaoZhuCe();
+//                    }
             }
         });
 

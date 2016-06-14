@@ -10,22 +10,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/name"/>
+        android:id="@+id/item_name"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/jiebankucun"/>
+        android:id="@+id/item_jiebankucun"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/jiaobankucun"/>
+        android:id="@+id/item_jiaobankucun"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/xiaoshoushuliang"/>
+        android:id="@+id/item_xiaoshoushuliang"/>
 
 </LinearLayout>
 </FrameLayout>

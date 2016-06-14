@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -24,6 +22,8 @@ import cn.it.sales.R;
 import cn.it.sales.Result.MyResult;
 import cn.it.sales.adapter.JiaoJieRecyclerAdapter;
 import cn.it.sales.application.MyApplication;
+import cn.it.sales.bean.JiaoBanShangPin;
+import cn.it.sales.bean.JieBanInfo;
 import cn.it.sales.bll.JiaoBanManager;
 import cn.it.sales.communal.Communals;
 import cn.it.sales.util.DateTimeUtil;
@@ -37,7 +37,7 @@ public class FragmentJieban extends Fragment {
     String mJiebanshiyi;
     View rootView;
     Context mContext;
-    List<JSONObject> mDataList;
+    List<JiaoBanShangPin> mDataList;
     JiaoJieRecyclerAdapter mJiaoJieRecyclerAdapter;
     RecyclerView mRecyclerView;
     JiaoBanManager mJiaoBanManager;
@@ -92,38 +92,28 @@ public class FragmentJieban extends Fragment {
     }
 
     //生成接班记录并写入数据库
-    private void writInfoToDB(List<JSONObject> dataList) {
-        SharedPreferences sharedPreferences=mContext.getSharedPreferences(Communals.sharedPreferencesforlogIn,Context.MODE_PRIVATE);
-        String  mName=sharedPreferences.getString("xingming", "");
-        int jiebangonghao=sharedPreferences.getInt("gonghao", 0);
+    private void writInfoToDB(List<JiaoBanShangPin> dataList) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(Communals.sharedPreferencesforlogIn, Context.MODE_PRIVATE);
+        String mName = sharedPreferences.getString("xingming", "");
+        int jiebangonghao = sharedPreferences.getInt("gonghao", 0);
 
-        String time= DateTimeUtil.getSystemtDateTimeToSQL3GMT0();
-        JSONObject jsonObject=new JSONObject();
-        JSONObject jsonObject1=new JSONObject();
-        jsonObject=mDataList.get(0);
-        int banci= MyApplication.getmBanCi();
-        Log.d("banci", "writInfoToDB: "+banci);
-        try {
+        String time = DateTimeUtil.getSystemtDateTimeToSQL3GMT0();
+        JSONObject jsonObject1 = new JSONObject();
+        int banci = MyApplication.getmBanCi();
+        JiaoBanShangPin jiaoBanShangPin=mDataList.get(0);
+        JieBanInfo jieBanInfo = new JieBanInfo();
 
-            int gonghao= (int) jsonObject.get("gonghao");
-            String mingcheng= (String) jsonObject.get("mingcheng");
-            String shangpinbianhao = (String) jsonObject.get("shangpinbianhao");
-            int jiaobankucunliang = jsonObject.getInt("jiaobankucun");
-            jsonObject1.put("banci",banci);
-            jsonObject1.put("mingcheng",mingcheng);
-            jsonObject1.put("jiebanshiyi",mJiebanshiyi);
-            jsonObject1.put("jiebanshijian",time);
-            jsonObject1.put("xingming",mName);
-            jsonObject1.put("gongghao",gonghao);
-            jsonObject1.put("jiebangonghao",jiebangonghao);
-            jsonObject1.put("shangpinbianhao",shangpinbianhao);
-            jsonObject1.put("jiebankucun",jiaobankucunliang);
-            jsonObject1.put("xiaoshoushuliang","");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        MyResult myResult=new MyResult();
-        myResult=mJiaoBanManager.writInfoToDB(jsonObject1);
+        jieBanInfo.setBanCi(banci);
+        jieBanInfo.setGongHao(jiaoBanShangPin.getGongHao());
+        jieBanInfo.setXingMing(mName);
+        jieBanInfo.setJieBanGongHao(jiebangonghao);
+        jieBanInfo.setJieBanShiJian(time);
+        jieBanInfo.setJiaoBanKuCunLiang(jiaoBanShangPin.getJiaoBanKuCunLiang());
+        jieBanInfo.setJieBanShiYi(mJiebanshiyi);
+
+
+
+        MyResult myResult=mJiaoBanManager.writInfoToDB(jieBanInfo);
         //返回是否插入成功
         if (myResult.getCode()>0){
             Toast.makeText(mContext,"插入成功",Toast.LENGTH_SHORT).show();

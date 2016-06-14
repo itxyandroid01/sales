@@ -112,7 +112,7 @@ public class SalesFragment5 extends Fragment {
                 int jieban = Integer.parseInt(shijian.substring(11, 13));
                 if (jieban >= 7 && jieban < 24) {
                     //启动服务，下载数据并放到本地数据库
-                    downloadservice();
+//                    downloadservice();
                     //根据时间日期生成唯一的本班班次
                     mBanci = Integer.parseInt(shijian.substring(0, 10).replace("-", "") + mBanBie);
                     //查询接班
@@ -133,7 +133,7 @@ public class SalesFragment5 extends Fragment {
         JiaoBanManager jiaoBanManager = new JiaoBanManager();
         //从首选项取出工号姓名
         int gonghao = mSharedPreferences.getInt("gonghao", 1001);
-        String xingming = mSharedPreferences.getString("xingming", "");
+        String xingming = mSharedPreferences.getString("xingming", "张三");
         //根据班次查询上班情况
         MyResult myResult = jiaoBanManager.readJiaobanByBanCi(banci, gonghao, xingming);
         int code = myResult.getCode();
@@ -153,7 +153,7 @@ public class SalesFragment5 extends Fragment {
                 //得到服务的Binder并保存到成员变量中
                 mSalesBinder = (SalesBinder) service;
                 //服务已连接 下载数据
-                mSalesBinder.downloadShangpinInfo();
+//                mSalesBinder.downloadShangpinInfo();
             }
             @Override
             public void onServiceDisconnected(ComponentName name) {
