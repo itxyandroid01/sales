@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import cn.it.sales.R;
 import cn.it.sales.Service.MyService;
 import cn.it.sales.Service.SalesBinder;
+import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
 import cn.it.sales.dao.LoginDao;
-import cn.it.sales.util.HexUtil;
 import de.greenrobot.event.EventBus;
 
 public class LoginActivity extends BaseActivity {
@@ -31,11 +31,11 @@ public class LoginActivity extends BaseActivity {
     ArrayList<String> mIsEmptylogin;
     Context mContext;
     EditText mEditTextUserName, mEditTextPassWord;
-    User mUser=new User();
+    User mUser;
     long mGroupId;
     LoginDao mLoginDao=new LoginDao();
     SalesBinder mBinder;
-    String mPassWordMd5;
+    //String mPassWordMd5;
     Intent mIntent ;
     ServiceConnection mServiceConnection = null;
     RadioGroup mRadioGroup;
@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         registerEventBus();
         mContext = this;
-
+        mUser= MyApplication.getUser();
         initEditText();
         //选择职位
        initRadioGroup();
@@ -92,14 +92,14 @@ public class LoginActivity extends BaseActivity {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == mRadioButtonXiaoShou.getId()) {
-                    mRadioGroupId = 1;
+                if (checkedId ==R.id.XiaoShou) {
+                    mUser.setGroupId(1000);
                 }
-                if (checkedId == mRadioButtonZhuGuan.getId()) {
-                    mRadioGroupId = 2;
+                if (checkedId == R.id.ZhuGuan) {
+                    mUser.setGroupId(1001);
                 }
-                if (checkedId == mRadioButtonKuGuan.getId()) {
-                    mRadioGroupId = 3;
+                if (checkedId ==R.id.KuGuan) {
+                    mUser.setGroupId(1002);
                 }
             }
         });
@@ -124,16 +124,15 @@ public class LoginActivity extends BaseActivity {
                 //检查登录输入规则
                 if(checkInputDengLu()){
                     //提交数据到服务器
-                    mIntent = new Intent(LoginActivity.this, MyService.class);
-                    mContext.bindService(mIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+                    Intent intent = new Intent(LoginActivity.this, MyService.class);
+                    mContext.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
                     tiJiaoDengLu();
                 }
 
             }
 
             private void tiJiaoDengLu() {
-                mPassWordMd5= HexUtil.getMd5(mPassWord);
-                mUser = new User(mGongHao,mPassWordMd5,mGroupId);
+                //mPassWordMd5= HexUtil.getMd5(mPassWord);
                 if(mBinder!=null) {
                     mBinder.selectUserNameAndPassword(mUser);
                 }
@@ -153,6 +152,7 @@ public class LoginActivity extends BaseActivity {
 
     private boolean checkInputDengLu() {
         getInputMessage();
+        mIsEmptylogin = new ArrayList<String>();
         if (mGongHao.isEmpty() || mPassWord.isEmpty()) {
             if (mGongHao.isEmpty()) {
                 mIsEmptylogin.add("用户名不能为空");
@@ -187,9 +187,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void getInputMessage() {
-        mIsEmptylogin = new ArrayList<String>();
-        mGongHao = mEditTextUserName.getText().toString();
-        mPassWord = mEditTextPassWord.getText().toString();
+        mUser.setGongHao(mEditTextUserName.getText().toString());
+        mUser.setPassWord( mEditTextPassWord.getText().toString());
     }
 
     private void initEditText() {
@@ -201,8 +200,8 @@ public class LoginActivity extends BaseActivity {
     protected void onStop() {
         if (mServiceConnection!=null) {
             this.unbindService(mServiceConnection);
-            EventBus.getDefault().unregister(this);
-            super.onStop();
         }
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }
