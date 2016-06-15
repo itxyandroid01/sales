@@ -22,7 +22,7 @@ import de.greenrobot.event.EventBus;
  * Created by Administrator on 2016/5/4.
  */
 public class MyService extends Service{
-    ResultUser mResultUser=new ResultUser();
+    ResultUser mResultUser=new ResultUser(1,"注册成功");
 
     public MyService(){
 
@@ -34,16 +34,22 @@ public class MyService extends Service{
     }
 
     public void selectUserMassageforWeb(User user){
+        //从bean层获取信息
         final String locationpasswoed=user.getPassWord();
         final long group=user.getGroupId();
+        //变为json格式
         JSONObject jsonObject=new JSONObject();
         try {
-            int gongHao=Integer.parseInt(user.getGongHao());
-            jsonObject.put("gonghao",gongHao);
+            jsonObject.put("gonghao",user.getGongHao());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        //变为字符串
         String jsontext=jsonObject.toString();
+
+
+        //调用通讯层
 
         ServerUtil.OnOKHttpListener listener=new ServerUtil.OnOKHttpListener() {
             @Override
@@ -98,8 +104,7 @@ public class MyService extends Service{
     public void userRegister(User user){
         final JSONObject jsonObject=new JSONObject();
         try {
-            int gongHao=Integer.parseInt(user.getGongHao());
-            jsonObject.put("gonghao",gongHao);
+            jsonObject.put("gonghao",user.getGongHao());
             jsonObject.put("mima",user.getPassWord());
             //jsonObject.put("xingming",user.getGongHao());
             jsonObject.put("shoujihaoma",user.getphone());
@@ -161,58 +166,48 @@ public class MyService extends Service{
             }
         };
         try {
+            //调用网络通信方法
             ServerUtil.upJsonStringByPost(Communals.upweb,Communals.RegisterCode,jsonText,listener);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    //调用通信层，利用通信层监听回调结果
     public void selectUserNameAndPasswordForWeb(User user){
+
         final JSONObject jsonObject=new JSONObject();
         try {
+
+            //bean层调用信息
             jsonObject.put("gonghao",user.getGongHao());
             jsonObject.put("password",user.getPassWord());
             jsonObject.put("groupid",user.getGroupId());
             String jsonText=jsonObject.toString();
             Log.d("houxiao",""+jsonText);
+
+
+            //调用通讯监听
             ServerUtil.OnOKHttpListener listener;
             listener=new ServerUtil.OnOKHttpListener() {
                 @Override
                 public void onSuccess(String jsonString) {
-//                    if(true){
-//                        Log.e("xxx",mResultUser.getMessage());
-//                        EventBus.getDefault().post(mResultUser);
-//                        return;
-//                    }
+//
                     try {
                         JSONObject jsonObject1=new JSONObject(jsonString);
                         String code=jsonObject1.getString("code");
                         String message=jsonObject1.getString("message");
                         if(message.equals("成功")){
                             //int groupid=jsonObject1.getInt("groupid");
-                           String user=jsonObject1.getString("user");
-                            JSONObject user2=new JSONObject(user);
-                            mResultUser.setResult(1);
-//                            int state=jsonObject1.getInt("state");
-                          //  String password=jsonObject1.getString("mima");
-//                            Log.d("xw",""+groupid);
-//                            ResultUser resultUser=new ResultUser(username,password,groupid,message,nick);
-//                            //存入首选项
-//                            UserManager userManager = new UserManager();
-//                            userManager.resultToSharedPreference(resultUser);
-//                                ResultUser resultUser=new ResultUser(username,state);
-                                mResultUser.setMessage("登录成功");
-                                EventBus.getDefault().post(mResultUser);
+                           String username=jsonObject1.getString("username");
+                            int state=jsonObject1.getInt("state");
+
+                                ResultUser resultUser=new ResultUser(username,state);
+                                resultUser.setMessage("登录成功");
+                            //将网络通讯后得到的信息post到注册的位置（LoginActivity）
+                            //通常是传递类
+                            EventBus.getDefault().post(resultUser);
                         }
-//                        if(result==-1){
-//                            String message="没有此用户";
-//                            ResultUser resultUser=new ResultUser(result,message);
-//                            EventBus.getDefault().post(resultUser);
-//                        }
-//                        if(result==-2){
-//                            String message="密码错误";
-//                            ResultUser resultUser=new ResultUser(result,message);
-//                            EventBus.getDefault().post(resultUser);
-//                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -222,7 +217,11 @@ public class MyService extends Service{
                 public void onFail(boolean b) {
                 }
             };
+
+
             try {
+
+                //此处执行网络通讯    先定义后使用listener
                 ServerUtil.upJsonStringByPost(Communals.upweb, Communals.loginCode, jsonText, listener);
 
             } catch (Exception e) {

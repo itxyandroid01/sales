@@ -61,13 +61,14 @@ public class RegisterActivity extends BaseActivity {
         registerEventBus();
         mContext = this;
         //注册
-        initButtonResister();
+        initButtonRegister();
         initEditText();
         initButton();
         initSpinner();
         initBinder();
     }
 
+    //注册界面 信息
     private void registerEventBus() {
         EventBus.getDefault().register(this);
     }
@@ -88,10 +89,10 @@ public class RegisterActivity extends BaseActivity {
         this.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
+    //获取所选职务
     private void initSpinner() {
+
         mSpinner = (Spinner) findViewById(R.id.spinner1);
-
-
       mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
           @Override
           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -108,7 +109,8 @@ public class RegisterActivity extends BaseActivity {
         mSpinner.setAdapter(mAdapter);
     }
 
-    private void initButtonResister() {
+    //跳转到业务界面
+    private void initButtonRegister() {
         Button button = (Button) findViewById(R.id.buttonRegistSubmit);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +130,7 @@ public class RegisterActivity extends BaseActivity {
 
             }
 
+    //注册界面 输入项检查
     private boolean checkInputZhuCe() {
         //读用户输入信息到成员变量
         getEditTextInfo();
@@ -185,6 +188,7 @@ public class RegisterActivity extends BaseActivity {
         return false;
     }
 
+    //binder中提交注册
     private void tiJiaoZhuCe() {
         //整合对象
         //mPassWordMd5= HexUtil.getMd5(mPassword);
@@ -194,26 +198,9 @@ public class RegisterActivity extends BaseActivity {
             mBinder.userRegister(mUser);
         }
     }
-//    private void initGetMessageCallback() {
-//
 
-//    }
 
-//    private MyResult loadSave() {
-//        getEditTextInfo();
-//        User user = new User(mUserName, mPassword, mName, mPhone, mPosition);
-//        UserManager userManager = new UserManager();
-//        MyResult myResult = userManager.register(user);
-//        return myResult;
-//    }
-
-//    private void upLoadUserInfo() {
-//        //得到键盘输入内容
-//        getEditTextInfo();
-//        User user=new User(mUserName,mPassword,mName,mPhone,mPosition);
-//        mSalesBinder.upJson(user);
-//    }
-
+    //获取编辑框内输入内容
     private void getEditTextInfo() {
         mGongHao = mEditTextUserName.getText().toString();
         mPassword = mEditTextPassword.getText().toString();
@@ -222,6 +209,7 @@ public class RegisterActivity extends BaseActivity {
         mPhone = mEditTextPhone.getText().toString();
     }
 
+    //返回按键
     private void initButton() {
         Button button = (Button) findViewById(R.id.buttonRegistreturn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +222,7 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
+    //编辑框
     private void initEditText() {
         mEditTextUserName = (EditText) findViewById(R.id.editTextRegistUserName);
         mEditTextPassword = (EditText) findViewById(R.id.editTextRegistPassword);
@@ -253,6 +242,7 @@ public class RegisterActivity extends BaseActivity {
             startActivity(intent);
         }
     }
+    //界面跳转后 解除注册
     @Override
     protected void onStop() {
         if (mServiceConnection!=null){
