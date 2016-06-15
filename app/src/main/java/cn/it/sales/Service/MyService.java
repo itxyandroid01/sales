@@ -38,7 +38,8 @@ public class MyService extends Service{
         final long group=user.getGroupId();
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("gonghao",user.getGongHao());
+            int gongHao=Integer.parseInt(user.getGongHao());
+            jsonObject.put("gonghao",gongHao);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,7 +98,8 @@ public class MyService extends Service{
     public void userRegister(User user){
         final JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("gonghao",user.getGongHao());
+            int gongHao=Integer.parseInt(user.getGongHao());
+            jsonObject.put("gonghao",gongHao);
             jsonObject.put("mima",user.getPassWord());
             //jsonObject.put("xingming",user.getGongHao());
             jsonObject.put("shoujihaoma",user.getphone());

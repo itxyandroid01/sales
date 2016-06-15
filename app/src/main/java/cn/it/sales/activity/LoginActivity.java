@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ import cn.it.sales.Service.SalesBinder;
 import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
-import cn.it.sales.dao.LoginDao;
+import cn.it.sales.bll.UserManager;
 import de.greenrobot.event.EventBus;
 
 public class LoginActivity extends BaseActivity {
@@ -33,14 +32,11 @@ public class LoginActivity extends BaseActivity {
     EditText mEditTextUserName, mEditTextPassWord;
     User mUser;
     long mGroupId;
-    LoginDao mLoginDao=new LoginDao();
-    SalesBinder mBinder;
+     SalesBinder mBinder;
     //String mPassWordMd5;
-    Intent mIntent ;
     ServiceConnection mServiceConnection = null;
     RadioGroup mRadioGroup;
-    RadioButton mRadioButtonXiaoShou,mRadioButtonZhuGuan,mRadioButtonKuGuan;
-    int mRadioGroupId=1;
+     int mRadioGroupId=1;
 
     @Override
     protected void onResume() {
@@ -86,9 +82,6 @@ public class LoginActivity extends BaseActivity {
     }
     private void initRadioGroup() {
         mRadioGroup = (RadioGroup) findViewById(R.id.RadioGroup1);
-        mRadioButtonXiaoShou = (RadioButton) findViewById(R.id.XiaoShou);
-        mRadioButtonZhuGuan = (RadioButton) findViewById(R.id.ZhuGuan);
-        mRadioButtonKuGuan = (RadioButton) findViewById(R.id.KuGuan);
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -143,7 +136,8 @@ public class LoginActivity extends BaseActivity {
         Toast.makeText(LoginActivity.this, resultUser.getMessage(), Toast.LENGTH_SHORT).show();
         if (resultUser.getResult() == 1) {
             //存入首选项，根据groupid跳转界面
-            mLoginDao.writeRegisterMessage(this, mUser);
+            UserManager userManager=new UserManager();
+            userManager.writeRegisterMessage(this, mUser);
             mUser.setZhuangTai(mUser.ONLINE_VERIFY);
             Intent intent = new Intent(LoginActivity.this, SalesMainActivity.class);
             startActivity(intent);

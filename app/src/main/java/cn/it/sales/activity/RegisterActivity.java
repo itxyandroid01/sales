@@ -25,11 +25,9 @@ import cn.it.sales.application.MyApplication;
 import cn.it.sales.bean.ResultUser;
 import cn.it.sales.bean.User;
 import cn.it.sales.bll.UserManager;
-import cn.it.sales.util.HexUtil;
 import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
-    ArrayList<String> mIsEmpty;
     String mGongHao, mPassword, mPassword2, mName, mPhone;
     Spinner mSpinner;
     String[] mJob = {"选择职位", "销售", "主管", "库管"};
@@ -117,13 +115,13 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(RegisterActivity.this, SalesMainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(RegisterActivity.this, SalesMainActivity.class);
+//                startActivity(intent);
 //                    //判断输入是否符合规则
-//                    if (checkInputZhuCe()) {
-//                        //如果符合则上传数据
-//                        tiJiaoZhuCe();
-//                    }
+                    if (checkInputZhuCe()) {
+                        //如果符合则上传数据
+                        tiJiaoZhuCe();
+                    }
             }
         });
 
@@ -133,7 +131,7 @@ public class RegisterActivity extends BaseActivity {
     private boolean checkInputZhuCe() {
         //读用户输入信息到成员变量
         getEditTextInfo();
-        mIsEmpty = new ArrayList<String>();
+        ArrayList<String> mIsEmpty = new ArrayList<String>();
         //如果输入有空，则不能进入注册
         if (mGongHao.isEmpty() || mPassword.isEmpty() || mPassword2.isEmpty() ||
                 mName.isEmpty() || mPhone.isEmpty()||!mPassword.equals(mPassword2)||mGroupId == 0) {
@@ -189,8 +187,8 @@ public class RegisterActivity extends BaseActivity {
 
     private void tiJiaoZhuCe() {
         //整合对象
-        mPassWordMd5= HexUtil.getMd5(mPassword);
-        mUser = new User(mGongHao, mPassWordMd5, mName, mPhone, mGroupId);
+        //mPassWordMd5= HexUtil.getMd5(mPassword);
+        mUser = new User(mGongHao, mPassword, mName, mPhone, mGroupId);
         //上传数据
         if(mBinder!=null) {
             mBinder.userRegister(mUser);
