@@ -51,6 +51,7 @@ public class LoginActivity extends BaseActivity {
         mContext = this;
         mUser= MyApplication.getUser();
         initEditText();
+
         //选择职位
        initRadioGroup();
         //跳转登录界面
