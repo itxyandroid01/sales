@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity {
     //String mPassWordMd5;
     ServiceConnection mServiceConnection = null;
     RadioGroup mRadioGroup;
-     int mRadioGroupId=1;
+    // int mRadioGroupId=1;
 
     @Override
     protected void onResume() {
@@ -55,10 +55,11 @@ public class LoginActivity extends BaseActivity {
        initRadioGroup();
         //跳转登录界面
         initImageView1();
-        //跳转注册界面
-        initImageView2();
         //绑定一个服务
         initBinder();
+        //跳转注册界面
+        initImageView2();
+
     }
 
     private void registerEventBus() {
@@ -86,13 +87,13 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId ==R.id.XiaoShou) {
-                    mUser.setGroupId(1000);
-                }
-                if (checkedId == R.id.ZhuGuan) {
                     mUser.setGroupId(1001);
                 }
-                if (checkedId ==R.id.KuGuan) {
+                if (checkedId == R.id.ZhuGuan) {
                     mUser.setGroupId(1002);
+                }
+                if (checkedId ==R.id.KuGuan) {
+                    mUser.setGroupId(1003);
                 }
             }
         });
@@ -123,9 +124,48 @@ public class LoginActivity extends BaseActivity {
                 }
 
             }
+            private boolean checkInputDengLu() {
+                // getInputMessage();
+                mGongHao= mEditTextUserName.getText().toString();
+                mPassWord= mEditTextPassWord.getText().toString();
+                mIsEmptylogin = new ArrayList<String>();
+                if (mGongHao.isEmpty() || mPassWord.isEmpty()) {
+                    if (mGongHao.isEmpty()) {
+                        mIsEmptylogin.add("用户名不能为空");
+                    }
+                    if (mPassWord.isEmpty()) {
+                        mIsEmptylogin.add("密码不能为空");
+                    }
+                    StringBuffer stringBuffer = new StringBuffer();
+                    for (int i = 0; i < mIsEmptylogin.size(); i++) {
+                        stringBuffer.append(mIsEmptylogin.get(i) + "\t");
+                    }
+                    String line2 = stringBuffer.toString();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("温馨提示");
+                    builder.setMessage(line2);
+                    DialogInterface.OnClickListener listener;
+                    listener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    };
+                    builder.setNegativeButton("取消", listener);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+                //错误信息为0
+                if(mIsEmptylogin.size()==0){
+                    return true;
+                }
+                return false;
+            }
 
             private void tiJiaoDengLu() {
                 //mPassWordMd5= HexUtil.getMd5(mPassWord);
+                mUser.setGongHao(mGongHao);
+                mUser.setPassWord(mPassWord);
                 if(mBinder!=null) {
                     mBinder.selectUserNameAndPassword(mUser);
                 }
@@ -144,46 +184,12 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private boolean checkInputDengLu() {
-        getInputMessage();
-        mIsEmptylogin = new ArrayList<String>();
-        if (mGongHao.isEmpty() || mPassWord.isEmpty()) {
-            if (mGongHao.isEmpty()) {
-                mIsEmptylogin.add("用户名不能为空");
-            }
-            if (mPassWord.isEmpty()) {
-                mIsEmptylogin.add("密码不能为空");
-            }
-            StringBuffer stringBuffer = new StringBuffer();
-            for (int i = 0; i < mIsEmptylogin.size(); i++) {
-                stringBuffer.append(mIsEmptylogin.get(i) + "\t");
-            }
-            String line2 = stringBuffer.toString();
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle("温馨提示");
-            builder.setMessage(line2);
-            DialogInterface.OnClickListener listener;
-            listener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            };
-            builder.setNegativeButton("取消", listener);
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
-        //错误信息为0
-        if(mIsEmptylogin.size()==0){
-            return true;
-        }
-        return false;
-    }
 
-    private void getInputMessage() {
-        mUser.setGongHao(mEditTextUserName.getText().toString());
-        mUser.setPassWord( mEditTextPassWord.getText().toString());
-    }
+
+//    private void getInputMessage() {
+//       mGongHao= mEditTextUserName.getText().toString();
+//       mPassWord= mEditTextPassWord.getText().toString();
+//    }
 
     private void initEditText() {
         mEditTextUserName = (EditText) findViewById(R.id.editText1);

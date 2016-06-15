@@ -22,7 +22,7 @@ import de.greenrobot.event.EventBus;
  * Created by Administrator on 2016/5/4.
  */
 public class MyService extends Service{
-    ResultUser mResultUser=new ResultUser(1,"注册成功");
+    ResultUser mResultUser=new ResultUser();
 
     public MyService(){
 
@@ -189,17 +189,19 @@ public class MyService extends Service{
                         String message=jsonObject1.getString("message");
                         if(message.equals("成功")){
                             //int groupid=jsonObject1.getInt("groupid");
-                           String username=jsonObject1.getString("username");
-                            int state=jsonObject1.getInt("state");
+                           String user=jsonObject1.getString("user");
+                            JSONObject user2=new JSONObject(user);
+                            mResultUser.setResult(1);
+//                            int state=jsonObject1.getInt("state");
                           //  String password=jsonObject1.getString("mima");
 //                            Log.d("xw",""+groupid);
 //                            ResultUser resultUser=new ResultUser(username,password,groupid,message,nick);
 //                            //存入首选项
 //                            UserManager userManager = new UserManager();
 //                            userManager.resultToSharedPreference(resultUser);
-                                ResultUser resultUser=new ResultUser(username,state);
-                                resultUser.setMessage("登录成功");
-                                EventBus.getDefault().post(resultUser);
+//                                ResultUser resultUser=new ResultUser(username,state);
+                                mResultUser.setMessage("登录成功");
+                                EventBus.getDefault().post(mResultUser);
                         }
 //                        if(result==-1){
 //                            String message="没有此用户";

@@ -41,7 +41,7 @@ public class User  implements Serializable{
     private int online = ONLINE_VERIFY;
     private String message="";
     private long userId=-1;
-    private long groupId=-1;
+    private long groupId=1001;
     public long getGroupId() {
         return groupId;
     }
