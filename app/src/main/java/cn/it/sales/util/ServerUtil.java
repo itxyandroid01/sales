@@ -35,21 +35,29 @@ public class ServerUtil {
     // www.baidu.com?methodName=0&params=json
     //http://172.16.12.3:8080/cms/RequestJsonServlet?methodName=0&params={}
     // }
+
+
+
     public static  void upJsonStringByPost(String url,String selectCode,String json,OnOKHttpListener listener) throws Exception {
+
+        //监听者模式
+        //对下载进行监听
         final OnOKHttpListener mOnOKHttpListener = listener;
-//            String urlStr="http://www.cnblogs.com/ct2011/p/400170     8.html";
-//            String json= "{ 'name': 'cxh', 'gender': 'man' }";
-        //RequestBody：请求的数据实体（Body,Headers）
-        //根据指定的数据类型JSON把json字符串转换为body
-//        Log.d("xq", url+selectCode+json);
+
+
         if (TextUtils.isEmpty(json) || listener == null) {
             throw new Exception("参数不能为空");
         }
                 JSONObject jsona=new JSONObject(json);
         final JSONObject jsonObject=new JSONObject();
+
                 jsonObject.put("mode",selectCode);
                 jsonObject.put("user",jsona);
+
+        //json变为 字符串
         String jsonString=jsonObject.toString();
+
+        //五步 1: RequestBody  此处向RequestBody添加信息
         RequestBody formBody = new FormEncodingBuilder()
                 .add("methodName", selectCode)
                 .add("params", jsonString)
@@ -58,14 +66,17 @@ public class ServerUtil {
 //        String url1 = url+json;
         //RequestBody body = RequestBody.create(JSON, json);
 //        Log.e("body", formBody + "");
+        //2：Request
         Request request = new Request.Builder()
                 .url(url)       //URL
                 .post(formBody)     //非明文的参数部分，
                 .build();
+        //3：得到client
         OkHttpClient okHttpClient = MyApplication.getOkHttpClient();
+        //4：准备进行网络通信
         Call call = okHttpClient.newCall(request);
-        Callback callback = new Callback(){
 
+        Callback callback = new Callback(){
             @Override
             public void onFailure(Request request, IOException e) {
                 //3.8
@@ -73,30 +84,19 @@ public class ServerUtil {
                     mOnOKHttpListener.onFail(false);
                 }
             }
-
             @Override
             public void onResponse(Response response) throws IOException {
                 if(mOnOKHttpListener!=null) {
                     //3.5
+                    //监听....
                     String text = response.body().string();
                     mOnOKHttpListener.onSuccess(text);
-                  // ResultUser mResultUser=new ResultUser(1,"注册成功");
-                  // EventBus.getDefault().post(mResultUser);
-//                    try {
-//                        JSONObject jsonObject1=new JSONObject(text);
-//                        int result=jsonObject1.getInt("result");
-//                        if(result==1){
-//
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
 
                 }
             }
         };
+        //5：入队，真正通讯
         call.enqueue(callback);
-
     }
 
     public static void downJsonString(boolean isGet, String url, Map<String, String> parmas, OnOKHttpListener listener)

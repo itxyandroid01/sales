@@ -6,11 +6,13 @@ import cn.it.sales.bean.JpushInfo;
 import cn.it.sales.bean.User;
 
 /**
+ *
+ * binder中没有返回值？
  * Created by Administrator on 2016/5/5.
  */
 public class SalesBinder extends Binder {
     MyService mMyService;
-    public SalesBinder(MyService myService){
+    public  SalesBinder(MyService myService){
         mMyService=myService;
     }
 

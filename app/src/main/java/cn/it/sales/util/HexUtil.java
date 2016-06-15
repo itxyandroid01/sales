@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 
 public class HexUtil {
-	
+	//md5加密
 //	
 //	public static void main(String[] args) {
 //		String srt = getMd5("mhl");
@@ -14,20 +14,20 @@ public class HexUtil {
 	
 	 public static String getMd5(String inStr)  
 	    {  
-	        String outStr=null;  
+	        String outStr=null;//输出项 为null
 	        if(inStr ==null)  
 	        {  
 	            outStr = null;  
 	        }  
 	        else if("".equals(inStr))  
 	        {  
-	            outStr = "";  
+	            outStr = "";  //空字符串
 	        }  
 	        else  
 	        {  
 	            try  
 	            {  
-	                MessageDigest md = MessageDigest.getInstance("MD5");  
+	                MessageDigest md = MessageDigest.getInstance("MD5");  //随机生成md5进行加密
 	                md.update(inStr.getBytes());  
 	                byte b[] = md.digest();  
 	                StringBuffer buf = new StringBuffer();  

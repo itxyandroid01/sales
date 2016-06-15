@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import cn.it.sales.R;
 
 /**
+ * 即时通讯功能
  * A simple {@link Fragment} subclass.
  */
 public class SalesFragment6 extends Fragment {
