@@ -169,7 +169,8 @@ public class MyService extends Service{
     public void selectUserNameAndPasswordForWeb(User user){
         final JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("gonghao",user.getGongHao());
+            int gonghao = Integer.parseInt(user.getGongHao());
+            jsonObject.put("gonghao",gonghao);
             jsonObject.put("password",user.getPassWord());
             jsonObject.put("groupid",user.getGroupId());
             String jsonText=jsonObject.toString();

@@ -8,6 +8,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -86,7 +87,7 @@ public class RegisterActivity extends BaseActivity {
 
             }
         };
-        this.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        mContext.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     //获取所选职务
@@ -136,8 +137,8 @@ public class RegisterActivity extends BaseActivity {
         getEditTextInfo();
         ArrayList<String> mIsEmpty = new ArrayList<String>();
         //如果输入有空，则不能进入注册
-        if (mGongHao.isEmpty() || mPassword.isEmpty() || mPassword2.isEmpty() ||
-                mName.isEmpty() || mPhone.isEmpty()||!mPassword.equals(mPassword2)||mGroupId == 0) {
+        if (TextUtils.isEmpty(mGongHao) || TextUtils.isEmpty(mPassword) || TextUtils.isEmpty(mPassword2) ||
+                TextUtils.isEmpty(mName) || TextUtils.isEmpty(mPhone)||!mPassword.equals(mPassword2)||mGroupId == 0) {
             if (mGongHao.isEmpty()) {
                 mIsEmpty.add("用户名不能为空");
             }
