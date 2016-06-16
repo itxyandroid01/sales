@@ -20,7 +20,6 @@ import cn.it.sales.adapter.MyViewPagerAdapter;
 import cn.it.sales.fragment.SalesFragment1;
 import cn.it.sales.fragment.SalesFragment2;
 import cn.it.sales.fragment.SalesFragment3;
-import cn.it.sales.fragment.SalesFragment4;
 import cn.it.sales.fragment.SalesFragment5;
 import cn.it.sales.fragment.SalesFragment6;
 
@@ -67,8 +66,6 @@ public class SalesMainActivity extends FragmentActivity {
         mDataList.add(item2);
         Fragment item3=new SalesFragment3();
         mDataList.add(item3);
-        Fragment item4=new  SalesFragment4();
-        mDataList.add(item4);
         Fragment item5=new SalesFragment5();
         mDataList.add(item5);
         Fragment item6=new  SalesFragment6();
@@ -79,8 +76,8 @@ public class SalesMainActivity extends FragmentActivity {
     private void initGridView() {
         mGridView = (GridView) findViewById(R.id.sales_gridView);
         mSalesList = new ArrayList<HashMap<String, Object>>();
-        final int[] images = {R.mipmap.p1, R.mipmap.p2, R.mipmap.p3, R.mipmap.p4, R.mipmap.p5, R.mipmap.p6};
-        String[] text = {"销售记账", "销售业绩", "热销分析", "公司通知", "交接班", "聊天交流"};
+        final int[] images = {R.mipmap.p1, R.mipmap.p2, R.mipmap.p3,  R.mipmap.p5, R.mipmap.p6};
+        String[] text = {"销售记账", "销售业绩", "热销分析", "交接班", "聊天交流"};
         for (int i = 0; i < images.length; i++) {
             HashMap<String, Object> map = new HashMap<>();
             map.put("images", images[i]);
@@ -115,17 +112,13 @@ public class SalesMainActivity extends FragmentActivity {
 
                         mViewPager.setCurrentItem(2);
                         break;
-                    case R.mipmap.p4:
+                    case R.mipmap.p5:
 
                         mViewPager.setCurrentItem(3);
                         break;
-                    case R.mipmap.p5:
-
-                        mViewPager.setCurrentItem(4);
-                        break;
                     case R.mipmap.p6:
 
-                        mViewPager.setCurrentItem(5);
+                        mViewPager.setCurrentItem(4);
                         break;
                 }
             }

@@ -2,24 +2,21 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-              android:padding="16dp"
+              android:orientation="vertical"
              tools:context="cn.it.sales.fragment.SalesFragment6">
 
-    <RelativeLayout
-        android:layout_width="match_parent" 
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-        <EditText
-            android:id="@+id/input_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        />
-        <Button
-            android:layout_alignRight="@+id/input_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发送"/>
-        
-    </RelativeLayout>
+        android:id="@+id/gongsitongzhi"
+        android:text="公司通知"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/liaotian"
+        android:text="同事聊天"/>
 
 </LinearLayout>
